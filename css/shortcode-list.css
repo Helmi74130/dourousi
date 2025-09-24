@@ -1,0 +1,81 @@
+/* Styles pour la mise en page en liste */
+.dourousi-courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px; /* Un petit espace pour la bordure */
+  background-color: #e9ecef; /* Couleur de fond pour les séparateurs */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dourousi-list-item {
+  background-color: #ffffff;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.dourousi-list-item:hover {
+  background-color: #f1f3f5;
+}
+
+.list-item-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.list-item-title {
+  margin: 0 0 5px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.list-item-title a {
+  text-decoration: none;
+  color: #343a40;
+  transition: color 0.2s ease;
+}
+
+.list-item-title a:hover {
+  color: var(--dourousi-color-main);
+}
+
+.list-item-meta {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.list-meta-savant {
+  font-weight: 500;
+}
+
+.list-meta-difficulte {
+  font-weight: 400;
+  font-style: italic;
+}
+.list-meta-difficulte a{
+  color: var(--dourousi-color-main);
+}
+
+.list-item-link {
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+.dourousi-btn {
+  background-color: var(--dourousi-color-main);
+  color: var(--dourousi-color-text);
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.dourousi-btn:hover {
+  background-color: var(--dourousi-color-main);
+  color: var(--dourousi-color-text);
+}

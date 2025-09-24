@@ -1,0 +1,82 @@
+
+
+
+/* Styles pour la mise en page en grille */
+.dourousi-courses-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px; /* Espace entre les cartes */
+  padding: 20px 0;
+}
+
+.dourousi-card-link {
+  text-decoration: none;
+  color: inherit;
+  flex: 1 1 300px; /* Les cartes peuvent grandir/rétrécir, mais ont une base de 300px */
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dourousi-card-link:hover {
+  transform: translateY(-8px); /* Légère levée au survol */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+}
+
+.dourousi-course-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden; /* Pour que l'image ne dépasse pas les coins arrondis */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-content {
+  padding: 20px;
+  flex-grow: 1; /* Permet au contenu de remplir l'espace restant */
+}
+
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #343a40;
+}
+
+.card-meta {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.card-meta p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.card-savant {
+  font-weight: 500;
+}
+
+.card-excerpt p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+}
+
+/* Ajustements pour les écrans plus petits */
+@media (max-width: 600px) {
+  .dourousi-courses-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}

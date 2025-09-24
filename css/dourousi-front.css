@@ -1,0 +1,549 @@
+.wii-hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 8%;
+  padding-bottom: 8%;
+  background-color: var(--dourousi-color-main);
+  border-radius: 0 0 40px 40px;
+  color: var(--dourousi-color-text);
+}
+
+.wii-dourousi-thumbnail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wii-hero-left {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wii-hero-left h1 {
+  margin-top: 30px;
+  color: var(--dourousi-color-text);
+}
+
+.wii-dourousi-thumbnail img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.wii-hero-right {
+  width: 100%;
+}
+
+.wii-dourousi-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 15px;
+  border: 1px solid white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.wii-dourousi-excerpt {
+  margin-top: 20px;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+.wii-hero-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.wii-link {
+  margin-top: 30px;
+}
+
+.wii-author {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 0;
+  font-style: italic;
+  border-right: 1px solid white;
+}
+
+.wii-book {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-style: italic;
+  padding-bottom: 0;
+}
+
+
+.wii-link {
+  gap: 10px;
+}
+
+.wii-hero-meta a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--dourousi-color-text);
+  padding: 8px 15px;
+  border: 1px solid white;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.wii-hero-meta a:hover {
+  background-color: var(--dourousi-color-text-hover);
+}
+
+.wii-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+
+
+
+.dourousi-progress {}
+
+.progress-bar {
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 12px;
+  width: 100%;
+}
+
+.progress-fill {
+  background: VAR(--dourousi-color-secondary);
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  margin-top: 6px;
+  color: var(--dourousi-color-text);
+  font-weight: 500;
+}
+
+
+
+
+
+/* Styles pour la section des chapitres audio */
+.wii-dourousi-chapters {
+  color: var(--dourousi-color-text);
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 5%;
+  border: 1px solid #ddd;
+  /* délimitation du container */
+  border-radius: 8px;
+  /* coins arrondis */
+  background: var(--dourousi-color-main);
+  /* couleur de fond */
+}
+
+.wii-dourousi-chapters H2 {
+  color: var(--dourousi-color-text);
+}
+
+.dourousi-chapter {
+  list-style: none;
+  margin-top: 25px;
+}
+
+.dourousi-chapters-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18x;
+  /* espace entre les chapitres */
+}
+
+
+
+.chapter-done {
+  display: none;
+  /* cacher la vraie checkbox */
+}
+
+.chapter-complete-label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.chapter-done+span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  border: 2px solid VAR(--dourousi-color-text);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chapter-done:checked+span {
+
+  background-color: VAR(--dourousi-color-secondary);
+}
+
+.chapter-done:checked+span::after {
+  content: "✔";
+  color: var(--dourousi-color-text);
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Lecteur audio principal */
+
+.cstom-audio audio {
+  width: 100%;
+}
+
+/* Styles pour le lecteur audio Plyr */
+.plyr--audio {
+  --plyr-control-icon-size: 30px;
+  /* taille des icônes */
+  --plyr-color-main: var(--dourousi-color-secondary);
+  /* couleur accent (progress, boutons actifs, etc.) */
+  --plyr-audio-controls-background: var(--dourousi-color-background);
+  --plyr-audio-control-color: var(--dourousi-color-text-audio);
+}
+
+.plyr--audio .plyr__controls{
+    padding: 0px !important;
+}
+
+
+
+
+/* Conteneur principal pour le titre et le lecteur */
+.custom-audio-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pour espacer le titre et le lecteur */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--dourousi-color-background);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+/* Style de la div du titre */
+.current-chapter-title {
+   display: flex;
+   justify-content: center;
+   padding: 20px;
+   padding-bottom: 0;
+   flex-basis: 20%;
+   font-size: 1.2em;
+   font-weight: bold;
+   background: var(--dourousi-color-secondary);
+   color: var(--dourousi-color-text-audio);
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+/* Nouvelles règles pour l'élément p */
+.current-chapter-title p {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   flex-grow: 1; /* Permet au p de prendre tout l'espace disponible */
+   text-align: center; /* Centre le texte si nécessaire */
+}
+
+/* Ajustement pour le lecteur audio dans le nouveau conteneur */
+.custom-audio {
+    flex-grow: 1; 
+}
+
+/* Styles pour le lecteur audio Plyr */
+.plyr--audio {
+    width: 100%;
+}
+
+/* Règle pour les petits écrans */
+@media (max-width: 768px) {
+    .custom-audio-container {
+        flex-direction: column; /* Le titre passe au-dessus du lecteur */
+        padding: 10px;
+    }
+    .current-chapter-title {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+/* Liste des chapitres */
+.dourousi-chapters-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+/* Liens des chapitres */
+.dourousi-chapter .chapter-link {
+  display: block;
+  padding: 10px 15px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+/* Hover / focus */
+.dourousi-chapter .chapter-link:hover,
+.dourousi-chapter .chapter-link:focus {
+  background-color: #e2e8f0;
+  transform: translateX(3px);
+}
+
+/* Chapitre actif (lecture en cours) */
+.dourousi-chapter .chapter-link.active {
+  background-color: color-mix(in srgb, var(--dourousi-color-background) 60%, transparent);
+  color: var(--dourousi-color-text-audio);
+  font-weight: 600;
+}
+
+
+/* Ajouter indicateur de lecture */
+.dourousi-chapter .chapter-link::before {
+  content: '⚪';
+  /* cercle blanc par défaut */
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* Chapitre actif (lecture en cours) */
+.dourousi-chapter .chapter-link.active::before {
+  content: '🔊';
+  /* cercle vert pour le chapitre en cours */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .dourousi-chapter .chapter-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Styles pour les derniers cours */
+
+.dourousi-latest-courses {
+  margin-top: 40px;
+}
+
+.dourousi-cards-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.dourousi-card {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.dourousi-card:hover {
+  transform: translateY(-5px);
+}
+
+.dourousi-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dourousi-card-title {
+  padding: 10px;
+  text-align: center;
+}
+
+
+
+/* Styles pour la navigation précédent / suivant */
+
+.dourousi-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  background: var(--dourousi-color-main);
+}
+
+.dourousi-navigation a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--dourousi-color-text);
+  font-weight: 600;
+}
+
+.dourousi-navigation a:hover {
+  color: var(--dourousi-color-text-hover);
+}
+
+.dourousi-navigation a span {
+  margin: 0 8px;
+}
+
+.dourousi-nav-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+
+
+
+
+
+
+/* Section globale */
+.dourousi-category-section {
+  padding: 40px 20px;
+  background-color: var(--dourousi-color-main);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.dourousi-category-section h2 {
+  color: var(--dourousi-color-text);
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+/* Grille de catégories */
+.dourousi-category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px; /* Espace entre les cartes */
+}
+
+/* Carte de catégorie individuelle */
+.dourousi-card-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Effet de survol sur la carte */
+.dourousi-card-content:hover {
+  transform: translateY(-8px); /* Légère levée */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+}
+
+/* Titre de la catégorie */
+.dourousi-card-content h3 {
+  color: var(--dourousi-color-main);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Texte du nombre de cours */
+.dourousi-card-content p {
+  color: #6c757d;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Bouton "Voir la catégorie" */
+.dourousi-btn {
+  background-color: var(--dourousi-color-main);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Effet de survol sur le bouton */
+.dourousi-btn:hover {
+  background-color: var(--dourousi-color-text-hover);
+  transform: translateY(-2px);
+}
+
+/* Media Queries pour les petits écrans */
+@media (max-width: 768px) {
+  .dourousi-category-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}
