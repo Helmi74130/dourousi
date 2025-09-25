@@ -22,7 +22,7 @@ function dourousi_course_details_callback( $post ) {
     wp_nonce_field( 'dourousi_save_meta', 'dourousi_meta_nonce' );
 
     // Récupérer les métas existants
-    $auteur = get_post_meta( $post->ID, '_dourousi_auteur', true );
+    $commentateur = get_post_meta( $post->ID, '_dourousi_commentateur', true );
     $nom_livre = get_post_meta( $post->ID, '_dourousi_nom_livre', true );
     $pdf_id = intval( get_post_meta( $post->ID, '_dourousi_pdf_id', true ) );
     $external = get_post_meta( $post->ID, '_dourousi_external', true );
@@ -34,100 +34,101 @@ function dourousi_course_details_callback( $post ) {
 
     // Affichage des champs
     ?>
-    <p>
-        <label for="dourousi_auteur"><strong>Auteur du livre</strong></label><br/>
-        <input type="text" id="dourousi_auteur" name="dourousi_auteur" value="<?php echo esc_attr( $auteur ); ?>" style="width:100%;" />
-    </p>
+<div class="dourousi-course-details">
+  <h4>Informations principales</h4>
+  <p>
+    <label for="dourousi_commentateur">Commentateur du livre</label>
+    <input type="text" id="dourousi_commentateur" name="dourousi_commentateur"
+      value="<?php echo esc_attr( $commentateur ); ?>" />
+  </p>
 
-    <p>
-        <label for="dourousi_nom_livre"><strong>Nom du livre</strong></label><br/>
-        <input type="text" id="dourousi_nom_livre" name="dourousi_nom_livre" value="<?php echo esc_attr( $nom_livre ); ?>" style="width:100%;" />
-    </p>
+  <p>
+    <label for="dourousi_nom_livre">Nom du livre</label>
+    <input type="text" id="dourousi_nom_livre" name="dourousi_nom_livre"
+      value="<?php echo esc_attr( $nom_livre ); ?>" />
+  </p>
 
-    <p>
-        <?php
-        $is_complete = get_post_meta( $post->ID, '_dourousi_is_complete', true );
-        ?>
-        <label>
-            <input type="checkbox" id="dourousi_is_complete" name="dourousi_is_complete" value="1" <?php checked( $is_complete, '1' ); ?> />
-            <strong>Cours complet ?</strong>
-        </label>
-    </p>
+  <p>
+    <?php $is_complete = get_post_meta( $post->ID, '_dourousi_is_complete', true ); ?>
+    <label>
+      <input type="checkbox" id="dourousi_is_complete" name="dourousi_is_complete" value="1"
+        <?php checked( $is_complete, '1' ); ?> />
+      Cours complet ?
+    </label>
+  </p>
 
 
-    <p>
-        <strong>PDF à télécharger</strong><br/>
-        <input type="hidden" id="dourousi_pdf_id" name="dourousi_pdf_id" value="<?php echo $pdf_id; ?>" />
-        <button class="button dourousi-select-pdf" type="button">Choisir / remplacer le PDF</button>
-        <span class="dourousi-pdf-display"><?php
-            if ( $pdf_id ) {
-                echo esc_html( get_the_title( $pdf_id ) );
-            } else {
-                echo 'Aucun PDF sélectionné';
-            }
-        ?></span>
-        <small class="description">Le fichier sera ajouté via la bibliothèque média (recommandé).</small>
-    </p>
+  <p>
+    <label>PDF à télécharger</label>
+    <input type="hidden" id="dourousi_pdf_id" name="dourousi_pdf_id" value="<?php echo $pdf_id; ?>" />
+    <button class="button dourousi-select-pdf" type="button">Choisir / remplacer le PDF</button>
+    <span
+      class="dourousi-pdf-display"><?php echo $pdf_id ? esc_html(get_the_title($pdf_id)) : 'Aucun PDF sélectionné'; ?></span>
+    <small class="description">Le fichier sera ajouté via la bibliothèque média (recommandé).</small>
+  </p>
 
-    <p>
-        <label for="dourousi_external"><strong>Lien ressources externes</strong></label><br/>
-        <input type="url" id="dourousi_external" name="dourousi_external" value="<?php echo esc_attr( $external ); ?>" style="width:100%;" placeholder="https://..." />
-    </p>
+  <p>
+    <label for="dourousi_external">Lien ressources externes</label>
+    <input type="url" id="dourousi_external" name="dourousi_external" value="<?php echo esc_attr($external); ?>"
+      placeholder="https://..." />
+  </p>
 
-    <hr/>
-    <h4>Chapitres audio</h4>
-    <p><button class="button button-primary" id="dourousi_add_chapter" type="button">Ajouter un chapitre</button></p>
+  <hr />
+  <h4>Chapitres audio</h4>
 
-    <div id="dourousi_chapters_container">
-        <?php
-        // existing chapters
+
+  <div id="dourousi_chapters_container">
+    <?php
         foreach ( $chapters as $index => $ch ) :
             $title = isset( $ch['title'] ) ? $ch['title'] : '';
             $audio_id = isset( $ch['audio_id'] ) ? intval( $ch['audio_id'] ) : 0;
             ?>
-            <div class="dourousi-chapter-row" data-index="<?php echo esc_attr( $index ); ?>" style="margin-bottom:12px; padding:8px; border:1px solid #ddd;">
-                <p>
-                    <label>Titre du chapitre</label><br/>
-                    <input type="text" name="dourousi_chapters[<?php echo $index; ?>][title]" value="<?php echo esc_attr( $title ); ?>" style="width:70%;" />
-                </p>
-                <p>
-                    <input type="hidden" name="dourousi_chapters[<?php echo $index; ?>][audio_id]" class="dourousi_audio_id" value="<?php echo esc_attr( $audio_id ); ?>" />
-                    <button class="button dourousi-select-audio" type="button">Choisir audio</button>
-                    <span class="dourousi-audio-display"><?php
-                        if ( $audio_id ) {
-                            echo esc_html( get_the_title( $audio_id ) );
-                        } else {
-                            echo 'Aucun audio';
-                        }
-                    ?></span>
-                    <button class="button dourousi-remove-chapter" type="button">Supprimer</button>
-                </p>
-            </div>
-        <?php endforeach; ?>
+    <div class="dourousi-chapter-row">
+      <h5>Chapitre #<?php echo esc_html($index + 1); ?></h5>
+      <p>
+        <label>Titre du chapitre</label>
+        <input type="text" name="dourousi_chapters[<?php echo $index; ?>][title]"
+          value="<?php echo esc_attr( $title ); ?>" />
+      </p>
+      <p>
+        <input type="hidden" name="dourousi_chapters[<?php echo $index; ?>][audio_id]" class="dourousi_audio_id"
+          value="<?php echo esc_attr( $audio_id ); ?>" />
+        <button class="button dourousi-select-audio" type="button">Choisir audio</button>
+        <span
+          class="dourousi-audio-display"><?php echo $audio_id ? esc_html(get_the_title($audio_id)) : 'Aucun audio'; ?></span>
+        <button class="button dourousi-remove-chapter" type="button">Supprimer</button>
+      </p>
     </div>
+    <?php endforeach; ?>
+  </div>
 
-    <!-- Template (hidden) -->
-    <div id="dourousi_chapter_template" style="display:none;">
-        <div class="dourousi-chapter-row" data-index="__index__" style="margin-bottom:12px; padding:8px; border:1px solid #ddd;">
-            <p>
-                <label>Titre du chapitre</label><br/>
-                <input type="text" name="dourousi_chapters[__index__][title]" value="" style="width:70%;" />
-            </p>
-            <p>
-                <input type="hidden" name="dourousi_chapters[__index__][audio_id]" class="dourousi_audio_id" value="" />
-                <button class="button dourousi-select-audio" type="button">Choisir audio</button>
-                <span class="dourousi-audio-display">Aucun audio</span>
-                <button class="button dourousi-remove-chapter" type="button">Supprimer</button>
-            </p>
-        </div>
+  <!-- Template (hidden) -->
+  <div id="dourousi_chapter_template" style="display:none;">
+    <div class="dourousi-chapter-row">
+      <h5>Chapitre #__index__</h5>
+      <p>
+        <label>Titre du chapitre</label>
+        <input type="text" name="dourousi_chapters[__index__][title]" value="" />
+      </p>
+      <p>
+        <input type="hidden" name="dourousi_chapters[__index__][audio_id]" class="dourousi_audio_id" value="" />
+        <button class="button dourousi-select-audio" type="button">Choisir audio</button>
+        <span class="dourousi-audio-display">Aucun audio</span>
+        <button class="button dourousi-remove-chapter" type="button">Supprimer</button>
+      </p>
     </div>
+  </div>
+  <p><button class="button button-primary" id="dourousi_add_chapter" type="button">Ajouter un chapitre</button></p>
+</div>
 
-    <style>
-        /* petit style admin pour rendre lisible */
-        #dourousi_chapters_container .dourousi-chapter-row label { font-weight: 600; }
-    </style>
+<style>
+/* petit style admin pour rendre lisible */
+#dourousi_chapters_container .dourousi-chapter-row label {
+  font-weight: 600;
+}
+</style>
 
-    <?php
+<?php
 }
 
 /**
@@ -165,10 +166,10 @@ function dourousi_save_meta( $post_id ) {
     if ( isset( $_POST['post_type'] ) && $_POST['post_type'] !== 'cours' ) return;
 
     // sanitize & save simple fields
-    if ( isset( $_POST['dourousi_auteur'] ) ) {
-        update_post_meta( $post_id, '_dourousi_auteur', sanitize_text_field( wp_unslash( $_POST['dourousi_auteur'] ) ) );
+    if ( isset( $_POST['dourousi_commentateur'] ) ) {
+        update_post_meta( $post_id, '_dourousi_commentateur', sanitize_text_field( wp_unslash( $_POST['dourousi_commentateur'] ) ) );
     } else {
-        delete_post_meta( $post_id, '_dourousi_auteur' );
+        delete_post_meta( $post_id, '_dourousi_commentateur' );
     }
 
     if ( isset( $_POST['dourousi_nom_livre'] ) ) {
