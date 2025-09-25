@@ -1,0 +1,125 @@
+/* Conteneur principal */
+.dourousi-archive-cours {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Titre principal */
+.dourousi-archive-cours h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    color: #222;
+}
+
+/* Grille responsive */
+.dourousi-cours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Carte */
+.dourousi-cours-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dourousi-cours-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Thumbnail */
+.dourousi-thumbnail {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.dourousi-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Titre */
+.dourousi-title {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: #111;
+}
+
+.dourousi-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dourousi-title a:hover {
+    color: #0073e6;
+}
+
+/* Meta infos */
+.dourousi-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.dourousi-meta p {
+    margin: 4px 0;
+}
+
+/* Bouton */
+.dourousi-btn {
+    margin-top: auto; /* pousse le bouton en bas */
+    display: inline-block;
+    padding: 10px 16px;
+    background: #0073e6;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+    text-align: center;
+}
+
+.dourousi-btn:hover {
+    background: #005bb5;
+}
+
+/* Pagination */
+.dourousi-pagination {
+    grid-column: 1 / -1; /* occupe toute la largeur */
+    margin-top: 40px;
+    text-align: center;
+}
+
+.dourousi-pagination .page-numbers {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.dourousi-pagination .page-numbers:hover {
+    background: #0073e6;
+    color: #fff;
+}
+
+.dourousi-pagination .current {
+    background: #0073e6;
+    color: #fff;
+    font-weight: bold;
+}

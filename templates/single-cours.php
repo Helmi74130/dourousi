@@ -6,12 +6,16 @@ get_header(); // ou partie de ton thème
 if (have_posts()) :
     while (have_posts()) : the_post();
         $post_id = get_the_ID();
-        $auteur = get_post_meta($post_id, '_dourousi_auteur', true);
         $nom_livre = get_post_meta($post_id, '_dourousi_nom_livre', true);
         $pdf_id = intval(get_post_meta($post_id, '_dourousi_pdf_id', true));
         $external = get_post_meta($post_id, '_dourousi_external', true);
         $chapters = get_post_meta($post_id, '_dourousi_chapters', true);
+
+        $auteur = wp_get_post_terms($post_id, 'savant', array('fields' => 'names'));
+        $auteur_list = !empty($auteur) ? implode(', ', $auteur) : '';
+
         $difficulty = wp_get_post_terms($post_id, 'difficulte', array('fields' => 'names'));
+
         $categories = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names'));
 ?>
 
@@ -38,8 +42,8 @@ if (have_posts()) :
         </div>
         <h1><?php the_title(); ?></h1>
         <div class="wii-hero-meta">
-          <?php if ($auteur) : ?>
-          <p class="wii-author"><strong>Auteur :</strong> <?php echo esc_html($auteur); ?></p>
+          <?php if ($auteur_list) : ?>
+          <p class="wii-author"><strong>Auteur :</strong> <?php echo esc_html($auteur_list); ?></p>
           <?php endif; ?>
 
           <?php if ($nom_livre) : ?>

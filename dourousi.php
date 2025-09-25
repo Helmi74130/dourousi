@@ -33,16 +33,35 @@ add_filter('template_include', function($template) {
 require_once plugin_dir_path(__FILE__) . 'includes/shortcodes.php';
 
 
-function dourousi_enqueue_admin_assets($hook) {
-    // Vérifie qu’on est bien sur ta page d’options
-    if ($hook !== 'settings_page_dourousi-options') return;
+add_filter( 'template_include', 'dourousi_load_archive_template' );
 
-    wp_enqueue_script(
-        'dourousi-shortcode-generator',
-        DOUROUSI_PLUGIN_URL . 'admin/js/shortcode-generator.js',
-        array(),
-        DOUROUSI_VERSION,
-        true
-    );
+function dourousi_load_archive_template( $template ) {
+    if ( is_post_type_archive( 'cours' ) ) {
+        $plugin_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cours.php';
+        if ( file_exists( $plugin_template ) ) {
+            return $plugin_template;
+        }
+    }
+    return $template;
 }
-add_action('admin_enqueue_scripts', 'dourousi_enqueue_admin_assets');
+
+function dourousi_enqueue_styles() {
+    if ( is_post_type_archive( 'cours' ) ) {
+        wp_enqueue_style( 'dourousi-archive', plugin_dir_url( __FILE__ ) . 'css/archive-cours.css' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'dourousi_enqueue_styles' );
+
+function dourousi_register_blocks() {
+    wp_register_script(
+        'dourousi-courses-block',
+        plugin_dir_url(__FILE__) . 'blocks/dourousi-courses-block.js',
+        array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components' ),
+        filemtime( plugin_dir_path(__FILE__) . 'blocks/dourousi-courses-block.js' )
+    );
+
+    register_block_type( 'dourousi/courses', array(
+        'editor_script' => 'dourousi-courses-block',
+    ) );
+}
+add_action( 'init', 'dourousi_register_blocks' );
