@@ -23,7 +23,7 @@ function dourousi_register_cpt() {
         'public'             => true,
         'show_in_menu'       => true,
         'menu_position'      => 20,
-        'menu_icon'          => 'dashicons-media-audio',
+        'menu_icon'          => 'dashicons-welcome-learn-more',
         'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'author', 'revisions' ),
         'has_archive'        => true,
         'rewrite'            => array( 'slug' => 'cours' ),

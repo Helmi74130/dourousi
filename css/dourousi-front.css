@@ -141,79 +141,128 @@
 
 
 /* Styles pour la section des chapitres audio */
+
+
+.wii-dourousi-chapters H2 {
+  color: var(--dourousi-color-text);
+}
 .wii-dourousi-chapters {
   color: var(--dourousi-color-text);
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
-  padding: 5%;
-  border: 1px solid #ddd;
-  /* délimitation du container */
-  border-radius: 8px;
-  /* coins arrondis */
+  padding-top: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
   background: var(--dourousi-color-main);
-  /* couleur de fond */
+  border-radius: 10px 10px 0 0;
 }
 
-.wii-dourousi-chapters H2 {
-  color: var(--dourousi-color-text);
-}
 
+/* Style de chaque élément de la liste */
 .dourousi-chapter {
-  list-style: none;
-  margin-top: 25px;
-}
-
-.dourousi-chapters-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+  padding: 20px 25px;
   display: flex;
-  flex-direction: column;
-  gap: 18x;
-  /* espace entre les chapitres */
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease, border-left 0.3s ease;
 }
 
 
+
+/* Ajoute un effet au survol */
+.dourousi-chapter:hover {
+  background-color: #f1f3f5;
+  border-left: 4px solid var(--dourousi-color-main);
+}
+
+/* Style du lien du chapitre */
+.dourousi-chapter .chapter-link {
+  text-decoration: none;
+  color: var(--dourousi-color-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  flex-grow: 1; /* Permet au lien d'occuper l'espace restant */
+  transition: color 0.2s ease;
+  display: block; /* Important pour que l'icône pseudo-élément fonctionne */
+}
+
+/* Style du lien du chapitre au survol */
+.dourousi-chapter .chapter-link:hover {
+  color: var(--dourousi-color-main);
+}
+
+/* Style de l'icône de lecture */
+.dourousi-chapter .chapter-link::before {
+  /* Assure-toi que Font Awesome 6 est bien chargé avec une police solide */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f144"; /* icône fa-play-circle */
+  margin-right: 10px;
+  color: var(--dourousi-color-main);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+/* Chapitre actif (lecture en cours) */
+
+
+
+/* Styles pour la case à cocher */
+.chapter-complete-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #6c757d;
+    cursor: pointer;
+    white-space: nowrap; /* Empêche le texte de se briser sur plusieurs lignes */
+}
 
 .chapter-done {
-  display: none;
-  /* cacher la vraie checkbox */
+    display: none;
 }
 
-.chapter-complete-label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.chapter-done + span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--dourousi-color-main);
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
-.chapter-done+span {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-top: 10px;
-  border: 2px solid VAR(--dourousi-color-text);
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.chapter-done:checked + span {
+    background-color: var(--dourousi-color-main);
+    border-color: var(--dourousi-color-main);
 }
 
-.chapter-done:checked+span {
-
-  background-color: VAR(--dourousi-color-secondary);
+.chapter-done:checked + span::after {
+    content: "✔";
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
 }
 
-.chapter-done:checked+span::after {
-  content: "✔";
-  color: var(--dourousi-color-text);
-  font-size: 14px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
+/* Ajustements pour les petits écrans */
+@media (max-width: 600px) {
+    .dourousi-chapter {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .chapter-complete-label {
+        margin-top: 10px;
+    }
+    .dourousi-chapter .chapter-link {
+      font-size: 1rem;
+    }
 }
-
 
 
 
@@ -318,17 +367,33 @@
 /* Liste des chapitres */
 .dourousi-chapters-list {
   list-style: none;
-  padding: 0;
+  padding-left: 10%;
+  padding-right: 10%;
   margin: 0;
+  
+
 }
 
+/* État par défaut */
+.dourousi-chapter {
+  margin-top: 0px;
+  border-left: 4px solid transparent;
+  transition: background 0.3s ease, border 0.3s ease;
+    border-bottom: 1px solid #ddd;
+}
 
+/* État sélectionné */
+.dourousi-chapter.active {
+  background-color: #F1F3F5;
+  border-left: 4px solid var(--dourousi-color-main);
+  color: var(--dourousi-color-main); /* texte en blanc par exemple */
+  font-weight: 600;
+}
 
 /* Liens des chapitres */
 .dourousi-chapter .chapter-link {
   display: block;
   padding: 10px 15px;
-  background-color: #f7f7f7;
   border-radius: 8px;
   text-decoration: none;
   color: #333;
@@ -337,34 +402,63 @@
   cursor: pointer;
 }
 
+
 /* Hover / focus */
 .dourousi-chapter .chapter-link:hover,
 .dourousi-chapter .chapter-link:focus {
-  background-color: #e2e8f0;
+
   transform: translateX(3px);
 }
 
 /* Chapitre actif (lecture en cours) */
 .dourousi-chapter .chapter-link.active {
-  background-color: color-mix(in srgb, var(--dourousi-color-background) 60%, transparent);
-  color: var(--dourousi-color-text-audio);
   font-weight: 600;
 }
 
 
 /* Ajouter indicateur de lecture */
 .dourousi-chapter .chapter-link::before {
-  content: '⚪';
-  /* cercle blanc par défaut */
-  margin-right: 10px;
-  font-size: 16px;
+    content: '\1F507';
+    margin-right: 10px;
+    font-size: 16px;
+    color: white;
 }
 
 /* Chapitre actif (lecture en cours) */
 .dourousi-chapter .chapter-link.active::before {
-  content: '🔊';
-  /* cercle vert pour le chapitre en cours */
+  display: inline-block;
+  content: "\1F56A"; /* Unicode de fa-volume-xmark */
+  margin-right: 10px;
+  font-size: 32px;
+  color: var(--dourousi-color-main);
+  transform: rotate(180deg);
+
 }
+
+/* Chapitre actif (lecture en cours) */
+.dourousi-chapter .chapter-link.active::before {
+  display: inline-block;
+  content: "\1F56A"; 
+  margin-right: 10px;
+  font-size: 24px;
+  color: var(--dourousi-color-main);
+  transform: rotate(180deg);
+  animation: pulseIcon 1.2s infinite ease-in-out;
+}
+
+/* Animation "pulse" */
+@keyframes pulseIcon {
+  0% {
+    transform: rotate(180deg) scale(1);
+  }
+  50% {
+    transform: rotate(183deg) scale(1.05); /* petit zoom */
+  }
+  100% {
+    transform: rotate(180deg) scale(1);
+  }
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {

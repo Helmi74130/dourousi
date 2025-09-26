@@ -61,7 +61,7 @@ if (have_posts()) :
                                 $pdf_url = wp_get_attachment_url($pdf_id); ?>
           <p class="wii-attachment">
             <a href="<?php echo esc_url($pdf_url); ?>" download>
-              <span class="wii-icon">&#128196;</span> Télécharger le PDF
+              <span class="wii-icon"><i class="fa-solid fa-download"></i></span> Télécharger le PDF
             </a>
           </p>
           <?php endif; ?>
@@ -69,7 +69,7 @@ if (have_posts()) :
           <?php if ($external) : ?>
           <p class="wii-external">
             <a href="<?php echo esc_url($external); ?>" target="_blank" rel="noopener noreferrer">
-              <span class="wii-icon">&#128279;</span> Ressources externes
+              <span class="wii-icon"><i class="fa-solid fa-link"></i></span> Ressources externes
             </a>
           </p>
           <?php endif; ?>
@@ -110,8 +110,8 @@ if (have_posts()) :
         </audio>
       </div>
     </div>
-
-    <!-- Liste des chapitres -->
+  </div>
+  <!-- Liste des chapitres -->
     <ul class="dourousi-chapters-list">
       <?php foreach ($chapters as $index => $chapter) :
                             $title     = isset($chapter['title']) ? $chapter['title'] : 'Chapitre ' . ($index + 1);
@@ -134,7 +134,6 @@ if (have_posts()) :
       <?php endforeach; ?>
     </ul>
 
-  </div>
   <?php endif; ?>
 
 

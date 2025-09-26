@@ -96,9 +96,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     updateProgress();
+
+    const chapters = document.querySelectorAll(".dourousi-chapter");
+
+            chapters.forEach(chapter => {
+                chapter.addEventListener("click", function () {
+                // Supprimer "active" sur les autres
+                chapters.forEach(c => c.classList.remove("active"));
+                // Ajouter "active" à celui cliqué
+                this.classList.add("active");
+                });
+            });
+        
+
 });
-
-
 
 
 
