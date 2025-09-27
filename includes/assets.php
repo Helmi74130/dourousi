@@ -78,3 +78,19 @@ function dourousi_enqueue_front_js() {
 add_action('wp_enqueue_scripts', 'dourousi_enqueue_front_js');
 
 
+function dourousi_enqueu_front_settings_css($hook) {
+    // Le hook correct est 'cpt_page_slug-de-la-sous-page'
+    // Ici, le CPT est 'cours' et le slug est 'dourousi-settings'
+    $correct_hook = 'cours_page_dourousi-settings';
+
+    if ( $hook === $correct_hook ) {
+        wp_enqueue_style(
+            'dourousi-option-admin-css', // handle
+            DOUROUSI_PLUGIN_URL . 'css/option-admin.css', // chemin vers ton CSS
+            array(),
+            DOUROUSI_VERSION
+        );
+    }
+}
+
+add_action('admin_enqueue_scripts', 'dourousi_enqueu_front_settings_css');

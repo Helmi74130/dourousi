@@ -210,11 +210,15 @@
 
 /* Styles pour la case à cocher */
 .chapter-complete-label {
+  background: var(--dourousi-color-main);
+  padding: 10px;
+    border-radius: 25px;
+
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--dourousi-color-text);
     cursor: pointer;
     white-space: nowrap; /* Empêche le texte de se briser sur plusieurs lignes */
 }
@@ -227,7 +231,7 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 2px solid var(--dourousi-color-main);
+    border: 2px solid var(--dourousi-color-text);
     border-radius: 50%;
     position: relative;
     transition: all 0.3s ease;
@@ -236,7 +240,7 @@
 
 .chapter-done:checked + span {
     background-color: var(--dourousi-color-main);
-    border-color: var(--dourousi-color-main);
+    border-color: var(--dourousi-color-text);
 }
 
 .chapter-done:checked + span::after {
@@ -522,15 +526,13 @@
   justify-content: space-between;
   margin-top: 40px;
   padding-top: 20px;
-  border-top: 1px solid #ddd;
-  background: var(--dourousi-color-main);
 }
 
 .dourousi-navigation a {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--dourousi-color-text);
+  color: var(--dourousi-color-main);
   font-weight: 600;
 }
 
@@ -558,7 +560,6 @@
 /* Section globale */
 .dourousi-category-section {
   padding: 40px 20px;
-  background-color: var(--dourousi-color-main);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
 }
@@ -630,8 +631,8 @@
 
 /* Effet de survol sur le bouton */
 .dourousi-btn:hover {
-  background-color: var(--dourousi-color-text-hover);
   transform: translateY(-2px);
+  color: white;
 }
 
 /* Media Queries pour les petits écrans */
@@ -639,5 +640,130 @@
   .dourousi-category-grid {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+
+/*Responsif*/
+
+/* ========================= */
+/* RESPONSIVE HERO SECTION   */
+/* ========================= */
+@media (max-width: 992px) {
+  .wii-hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 10% 5%;
+  }
+
+  .wii-hero-left,
+  .wii-hero-right {
+    width: 100%;
+  }
+
+  .wii-dourousi-thumbnail img {
+    width: 70%; /* un peu plus large sur tablette */
+  }
+}
+
+@media (max-width: 600px) {
+  .wii-hero-section {
+    padding: 15% 5%;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .wii-dourousi-thumbnail img {
+    width: 90%; /* plein écran sur mobile */
+  }
+
+  .wii-hero-left h1 {
+    font-size: 1.6rem;
+    margin-top: 20px;
+  }
+
+  .wii-dourousi-excerpt {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}
+
+/* ========================= */
+/* RESPONSIVE CHAPTER LIST   */
+/* ========================= */
+@media (max-width: 768px) {
+  .dourousi-chapters-list {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dourousi-chapter {
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dourousi-chapter .chapter-link {
+    font-size: 0.95rem;
+  }
+
+  .chapter-complete-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* ========================= */
+/* RESPONSIVE LATEST COURSES */
+/* ========================= */
+@media (max-width: 992px) {
+  .dourousi-cards-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dourousi-card {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  .dourousi-card {
+    flex: 1 1 100%;
+  }
+}
+
+/* ========================= */
+/* RESPONSIVE NAVIGATION     */
+/* ========================= */
+@media (max-width: 768px) {
+  .dourousi-navigation {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .dourousi-navigation a {
+    justify-content: center;
+  }
+}
+
+/* ========================= */
+/* RESPONSIVE CATEGORY GRID  */
+/* ========================= */
+@media (max-width: 992px) {
+  .dourousi-category-grid {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dourousi-card-content {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .dourousi-category-section h2 {
+    font-size: 1.6rem;
   }
 }

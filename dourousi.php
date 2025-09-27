@@ -65,3 +65,5 @@ function dourousi_register_blocks() {
     ) );
 }
 add_action( 'init', 'dourousi_register_blocks' );
+
+
