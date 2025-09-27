@@ -1,25 +1,28 @@
 <?php
+
 /**
  * Enregistrement du CPT "cours" + taxonomies
  * avec slug dynamique depuis les options.
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Sécurité
+if (! defined('ABSPATH')) exit; // Sécurité
 
 /**
  * Récupération du slug personnalisé depuis les options
  */
-function dourousi_get_cpt_slug() {
+function dourousi_get_cpt_slug()
+{
     $options = get_option('dourousi_options');
-    return isset($options['custom_slug']) && !empty($options['custom_slug']) 
-        ? sanitize_title($options['custom_slug']) 
+    return isset($options['custom_slug']) && !empty($options['custom_slug'])
+        ? sanitize_title($options['custom_slug'])
         : 'cours';
 }
 
 /**
  * Register Custom Post Type : cours
  */
-function dourousi_register_cpt() {
+function dourousi_register_cpt()
+{
     $slug = dourousi_get_cpt_slug();
 
     $labels = array(
@@ -43,24 +46,25 @@ function dourousi_register_cpt() {
         'show_in_menu'       => true,
         'menu_position'      => 20,
         'menu_icon'          => 'dashicons-welcome-learn-more',
-        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'author', 'revisions' ),
+        'supports'           => array('title', 'editor', 'thumbnail', 'excerpt', 'author', 'revisions'),
         'has_archive'        => true,
-        'rewrite'            => array( 'slug' => $slug ),
+        'rewrite'            => array('slug' => $slug),
         'show_in_rest'       => true,
     );
 
-    register_post_type( 'cours', $args );
+    register_post_type('cours', $args);
 }
-add_action( 'init', 'dourousi_register_cpt' );
+add_action('init', 'dourousi_register_cpt');
 
 /**
  * Register Taxonomies : difficulté, catégorie, savant
  */
-function dourousi_register_taxonomies() {
+function dourousi_register_taxonomies()
+{
     $slug = dourousi_get_cpt_slug(); // pour cohérence avec CPT
 
     // Difficulté
-    register_taxonomy( 'difficulte', array( 'cours' ), array(
+    register_taxonomy('difficulte', array('cours'), array(
         'hierarchical' => true,
         'labels'       => array(
             'name' => 'Difficultés',
@@ -73,11 +77,11 @@ function dourousi_register_taxonomies() {
         ),
         'show_ui'      => true,
         'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => $slug . '-difficulte' ),
-    ) );
+        'rewrite'      => array('slug' => $slug . '-difficulte'),
+    ));
 
     // Catégorie du cours
-    register_taxonomy( 'categorie_cours', array( 'cours' ), array(
+    register_taxonomy('categorie_cours', array('cours'), array(
         'hierarchical' => true,
         'labels'       => array(
             'name' => 'Catégories de cours',
@@ -90,11 +94,11 @@ function dourousi_register_taxonomies() {
         ),
         'show_ui'      => true,
         'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => $slug . '-categorie' ),
-    ) );
+        'rewrite'      => array('slug' => $slug . '-categorie'),
+    ));
 
     // Savants
-    register_taxonomy( 'savant', array( 'cours' ), array(
+    register_taxonomy('savant', array('cours'), array(
         'hierarchical' => true,
         'labels'       => array(
             'name' => 'Savants',
@@ -108,33 +112,35 @@ function dourousi_register_taxonomies() {
         ),
         'show_ui'      => true,
         'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => $slug . '-savant' ),
-    ) );
+        'rewrite'      => array('slug' => $slug . '-savant'),
+    ));
 }
-add_action( 'init', 'dourousi_register_taxonomies' );
+add_action('init', 'dourousi_register_taxonomies');
 
 /**
  * Flush rewrite rules à l’activation
  */
-function dourousi_activate() {
+function dourousi_activate()
+{
     dourousi_register_cpt();
     dourousi_register_taxonomies();
     flush_rewrite_rules();
 }
-register_activation_hook( __FILE__, 'dourousi_activate' );
+register_activation_hook(__FILE__, 'dourousi_activate');
 
 /**
  * Flush rewrite rules à la désactivation
  */
-function dourousi_deactivate() {
+function dourousi_deactivate()
+{
     flush_rewrite_rules();
 }
-register_deactivation_hook( __FILE__, 'dourousi_deactivate' );
+register_deactivation_hook(__FILE__, 'dourousi_deactivate');
 
 /**
  * Flush rewrite rules quand on change le slug dans les options
  */
-add_action('update_option_dourousi_options', function($old_value, $value){
+add_action('update_option_dourousi_options', function ($old_value, $value) {
     $old_slug = isset($old_value['custom_slug']) ? $old_value['custom_slug'] : '';
     $new_slug = isset($value['custom_slug']) ? $value['custom_slug'] : '';
 
@@ -147,4 +153,3 @@ add_action('update_option_dourousi_options', function($old_value, $value){
         flush_rewrite_rules();
     }
 }, 10, 2);
-

@@ -146,6 +146,7 @@
 .wii-dourousi-chapters H2 {
   color: var(--dourousi-color-text);
 }
+
 .wii-dourousi-chapters {
   color: var(--dourousi-color-text);
   margin-top: 5%;
@@ -182,9 +183,11 @@
   color: var(--dourousi-color-text);
   font-size: 1.25rem;
   font-weight: 600;
-  flex-grow: 1; /* Permet au lien d'occuper l'espace restant */
+  flex-grow: 1;
+  /* Permet au lien d'occuper l'espace restant */
   transition: color 0.2s ease;
-  display: block; /* Important pour que l'icône pseudo-élément fonctionne */
+  display: block;
+  /* Important pour que l'icône pseudo-élément fonctionne */
 }
 
 /* Style du lien du chapitre au survol */
@@ -197,7 +200,8 @@
   /* Assure-toi que Font Awesome 6 est bien chargé avec une police solide */
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
-  content: "\f144"; /* icône fa-play-circle */
+  content: "\f144";
+  /* icône fa-play-circle */
   margin-right: 10px;
   color: var(--dourousi-color-main);
   transition: all 0.3s ease;
@@ -212,60 +216,63 @@
 .chapter-complete-label {
   background: var(--dourousi-color-main);
   padding: 10px;
-    border-radius: 25px;
+  border-radius: 25px;
 
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
-    color: var(--dourousi-color-text);
-    cursor: pointer;
-    white-space: nowrap; /* Empêche le texte de se briser sur plusieurs lignes */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--dourousi-color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  /* Empêche le texte de se briser sur plusieurs lignes */
 }
 
 .chapter-done {
-    display: none;
+  display: none;
 }
 
-.chapter-done + span {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--dourousi-color-text);
-    border-radius: 50%;
-    position: relative;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
+.chapter-done+span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--dourousi-color-text);
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
-.chapter-done:checked + span {
-    background-color: var(--dourousi-color-main);
-    border-color: var(--dourousi-color-text);
+.chapter-done:checked+span {
+  background-color: var(--dourousi-color-main);
+  border-color: var(--dourousi-color-text);
 }
 
-.chapter-done:checked + span::after {
-    content: "✔";
-    color: #fff;
-    font-size: 14px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -55%);
+.chapter-done:checked+span::after {
+  content: "✔";
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
 }
 
 /* Ajustements pour les petits écrans */
 @media (max-width: 600px) {
-    .dourousi-chapter {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-    }
-    .chapter-complete-label {
-        margin-top: 10px;
-    }
-    .dourousi-chapter .chapter-link {
-      font-size: 1rem;
-    }
+  .dourousi-chapter {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .chapter-complete-label {
+    margin-top: 10px;
+  }
+
+  .dourousi-chapter .chapter-link {
+    font-size: 1rem;
+  }
 }
 
 
@@ -294,8 +301,8 @@
   --plyr-audio-control-color: var(--dourousi-color-text-audio);
 }
 
-.plyr--audio .plyr__controls{
-    padding: 0px !important;
+.plyr--audio .plyr__controls {
+  padding: 0px !important;
 }
 
 
@@ -303,62 +310,67 @@
 
 /* Conteneur principal pour le titre et le lecteur */
 .custom-audio-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Pour espacer le titre et le lecteur */
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--dourousi-color-background);
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Pour espacer le titre et le lecteur */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--dourousi-color-background);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
 }
 
 /* Style de la div du titre */
 .current-chapter-title {
-   display: flex;
-   justify-content: center;
-   padding: 20px;
-   padding-bottom: 0;
-   flex-basis: 20%;
-   font-size: 1.2em;
-   font-weight: bold;
-   background: var(--dourousi-color-secondary);
-   color: var(--dourousi-color-text-audio);
-   overflow: hidden;
-   text-overflow: ellipsis;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  padding-bottom: 0;
+  flex-basis: 20%;
+  font-size: 1.2em;
+  font-weight: bold;
+  background: var(--dourousi-color-secondary);
+  color: var(--dourousi-color-text-audio);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Nouvelles règles pour l'élément p */
 .current-chapter-title p {
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   flex-grow: 1; /* Permet au p de prendre tout l'espace disponible */
-   text-align: center; /* Centre le texte si nécessaire */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  /* Permet au p de prendre tout l'espace disponible */
+  text-align: center;
+  /* Centre le texte si nécessaire */
 }
 
 /* Ajustement pour le lecteur audio dans le nouveau conteneur */
 .custom-audio {
-    flex-grow: 1; 
+  flex-grow: 1;
 }
 
 /* Styles pour le lecteur audio Plyr */
 .plyr--audio {
-    width: 100%;
+  width: 100%;
 }
 
 /* Règle pour les petits écrans */
 @media (max-width: 768px) {
-    .custom-audio-container {
-        flex-direction: column; /* Le titre passe au-dessus du lecteur */
-        padding: 10px;
-    }
-    .current-chapter-title {
-        text-align: center;
-        margin-bottom: 10px;
-    }
+  .custom-audio-container {
+    flex-direction: column;
+    /* Le titre passe au-dessus du lecteur */
+    padding: 10px;
+  }
+
+  .current-chapter-title {
+    text-align: center;
+    margin-bottom: 10px;
+  }
 }
 
 
@@ -374,7 +386,7 @@
   padding-left: 10%;
   padding-right: 10%;
   margin: 0;
-  
+
 
 }
 
@@ -383,14 +395,15 @@
   margin-top: 0px;
   border-left: 4px solid transparent;
   transition: background 0.3s ease, border 0.3s ease;
-    border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 /* État sélectionné */
 .dourousi-chapter.active {
   background-color: #F1F3F5;
   border-left: 4px solid var(--dourousi-color-main);
-  color: var(--dourousi-color-main); /* texte en blanc par exemple */
+  color: var(--dourousi-color-main);
+  /* texte en blanc par exemple */
   font-weight: 600;
 }
 
@@ -422,16 +435,17 @@
 
 /* Ajouter indicateur de lecture */
 .dourousi-chapter .chapter-link::before {
-    content: '\1F507';
-    margin-right: 10px;
-    font-size: 16px;
-    color: white;
+  content: '\1F507';
+  margin-right: 10px;
+  font-size: 16px;
+  color: white;
 }
 
 /* Chapitre actif (lecture en cours) */
 .dourousi-chapter .chapter-link.active::before {
   display: inline-block;
-  content: "\1F56A"; /* Unicode de fa-volume-xmark */
+  content: "\1F56A";
+  /* Unicode de fa-volume-xmark */
   margin-right: 10px;
   font-size: 32px;
   color: var(--dourousi-color-main);
@@ -442,7 +456,7 @@
 /* Chapitre actif (lecture en cours) */
 .dourousi-chapter .chapter-link.active::before {
   display: inline-block;
-  content: "\1F56A"; 
+  content: "\1F56A";
   margin-right: 10px;
   font-size: 24px;
   color: var(--dourousi-color-main);
@@ -455,9 +469,12 @@
   0% {
     transform: rotate(180deg) scale(1);
   }
+
   50% {
-    transform: rotate(183deg) scale(1.05); /* petit zoom */
+    transform: rotate(183deg) scale(1.05);
+    /* petit zoom */
   }
+
   100% {
     transform: rotate(180deg) scale(1);
   }
@@ -576,7 +593,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 25px; /* Espace entre les cartes */
+  gap: 25px;
+  /* Espace entre les cartes */
 }
 
 /* Carte de catégorie individuelle */
@@ -597,8 +615,10 @@
 
 /* Effet de survol sur la carte */
 .dourousi-card-content:hover {
-  transform: translateY(-8px); /* Légère levée */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+  transform: translateY(-8px);
+  /* Légère levée */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  /* Ombre plus prononcée */
 }
 
 /* Titre de la catégorie */
@@ -662,7 +682,8 @@
   }
 
   .wii-dourousi-thumbnail img {
-    width: 70%; /* un peu plus large sur tablette */
+    width: 70%;
+    /* un peu plus large sur tablette */
   }
 }
 
@@ -673,7 +694,8 @@
   }
 
   .wii-dourousi-thumbnail img {
-    width: 90%; /* plein écran sur mobile */
+    width: 90%;
+    /* plein écran sur mobile */
   }
 
   .wii-hero-left h1 {
@@ -783,63 +805,65 @@
 
 
 
-/* Conteneur global pour les métadonnées */
-.course-meta-tags {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed #e0e0e0;
-}
 
 /* Style de chaque ligne (Difficulté et Catégories) */
 .course-meta-tags .meta-line {
-    margin: 0 0 8px 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    display: flex; /* Permet un alignement en ligne */
-    align-items: center;
-    flex-wrap: wrap; /* Assure que les tags passent à la ligne si besoin */
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding-bottom: 0;
+  display: flex;
+  /* Permet un alignement en ligne */
+  align-items: center;
+  flex-wrap: wrap;
+  /* Assure que les tags passent à la ligne si besoin */
 }
 
 .course-meta-tags strong {
-    font-weight: 700;
-    color: var(--dourousi-color-text, #343a40); /* Utilise la couleur du texte */
-    margin-right: 10px;
-    flex-shrink: 0; /* Empêche le titre de réduire sa taille */
+  font-weight: 700;
+  color: var(--dourousi-color-text, #343a40);
+  /* Utilise la couleur du texte */
+  margin-right: 10px;
+  flex-shrink: 0;
+  /* Empêche le titre de réduire sa taille */
 }
 
 /* Style général du badge (Tag) */
 .course-meta-tags .meta-tag {
-    display: inline-block;
-    padding: 4px 10px;
-    margin: 3px 5px 3px 0;
-    border-radius: 20px; /* Bords très arrondis pour l'effet de tag */
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: capitalize;
-    transition: all 0.3s ease;
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 3px 5px 3px 0;
+  border-radius: 20px;
+  /* Bords très arrondis pour l'effet de tag */
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
 }
 
 /* 🟢 Style spécifique pour les Tags de DIFFICULTÉ */
 .course-meta-tags .difficulty-tag {
-    /* Utilisation de la couleur secondaire pour mettre en avant la difficulté */
-    background-color: var(--dourousi-color-secondary, #ff9800);
-    color: #ffffff; /* Texte blanc sur fond coloré */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Utilisation de la couleur secondaire pour mettre en avant la difficulté */
+  background-color: var(--dourousi-color-secondary, #ff9800);
+  color: #ffffff;
+  /* Texte blanc sur fond coloré */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .course-meta-tags .difficulty-tag:hover {
-    background-color: #e68900; /* Assombrissement au survol */
+  background-color: #e68900;
+  /* Assombrissement au survol */
 }
 
 /* 🟦 Style spécifique pour les Tags de CATÉGORIES */
 .course-meta-tags .category-tag {
-    /* Utilisation d'une couleur d'arrière-plan neutre ou de la couleur principale */
-    background-color: #f1f3f5;
-    color: #555;
-    border: 1px solid #e0e0e0;
+  /* Utilisation d'une couleur d'arrière-plan neutre ou de la couleur principale */
+  background-color: #f1f3f5;
+  color: #555;
+  border: 1px solid #e0e0e0;
 }
 
 .course-meta-tags .category-tag:hover {
-    background-color: #e9ecef;
-    color: var(--dourousi-color-main, #2b8a3e);
+  background-color: #e9ecef;
+  color: var(--dourousi-color-main, #2b8a3e);
 }
