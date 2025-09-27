@@ -1,5 +1,7 @@
 <?php 
 
+if (!defined('ABSPATH')) exit;
+
 /**
  * Add meta box for course details (author, book, pdf, external link, chapters)
  */

@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('ABSPATH')) exit;
+
+
 /**
  * Enregistrement du CPT "cours" + taxonomies
  * avec slug dynamique depuis les options.

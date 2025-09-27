@@ -175,6 +175,7 @@
 .dourousi-chapter:hover {
   background-color: #f1f3f5;
   border-left: 4px solid var(--dourousi-color-main);
+  cursor: pointer;
 }
 
 /* Style du lien du chapitre */
@@ -196,17 +197,17 @@
 }
 
 /* Style de l'icône de lecture */
-.dourousi-chapter .chapter-link::before {
-  /* Assure-toi que Font Awesome 6 est bien chargé avec une police solide */
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  content: "\f144";
-  /* icône fa-play-circle */
-  margin-right: 10px;
-  color: var(--dourousi-color-main);
-  transition: all 0.3s ease;
-  display: inline-block;
-}
+/* icône de lecture à gauche du chapitre, attachée au li */
+/*.chapter-title::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f144"; 
+    margin-right: 10px;
+    color: var(--dourousi-color-main);
+    transition: all 0.3s ease;
+    display: inline-block;
+}*/
+
 
 /* Chapitre actif (lecture en cours) */
 
@@ -227,7 +228,9 @@
   white-space: nowrap;
   /* Empêche le texte de se briser sur plusieurs lignes */
 }
-
+.chapter-complete-label:hover {
+  transform: translateY(-2px);
+}
 .chapter-done {
   display: none;
 }
@@ -363,13 +366,16 @@
 @media (max-width: 768px) {
   .custom-audio-container {
     flex-direction: column;
-    /* Le titre passe au-dessus du lecteur */
-    padding: 10px;
+    
+  }
+  #current-title-display{
+    padding: 0;
   }
 
   .current-chapter-title {
-    text-align: center;
-    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
   }
 }
 
@@ -403,8 +409,6 @@
   background-color: #F1F3F5;
   border-left: 4px solid var(--dourousi-color-main);
   color: var(--dourousi-color-main);
-  /* texte en blanc par exemple */
-  font-weight: 600;
 }
 
 /* Liens des chapitres */
@@ -434,7 +438,7 @@
 
 
 /* Ajouter indicateur de lecture */
-.dourousi-chapter .chapter-link::before {
+.chapter-title::before {
   content: '\1F507';
   margin-right: 10px;
   font-size: 16px;
@@ -442,7 +446,7 @@
 }
 
 /* Chapitre actif (lecture en cours) */
-.dourousi-chapter .chapter-link.active::before {
+.chapter-title.active::before {
   display: inline-block;
   content: "\1F56A";
   /* Unicode de fa-volume-xmark */
@@ -454,7 +458,7 @@
 }
 
 /* Chapitre actif (lecture en cours) */
-.dourousi-chapter .chapter-link.active::before {
+.chapter-title.active::before {
   display: inline-block;
   content: "\1F56A";
   margin-right: 10px;
@@ -716,6 +720,10 @@
   .dourousi-chapters-list {
     padding-left: 5%;
     padding-right: 5%;
+  }
+  .wii-dourousi-chapters {
+    margin-left: 5%;
+    margin-right: 5%;
   }
 }
 

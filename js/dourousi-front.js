@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     const playerElement = document.getElementById('main-audio-player');
-    const chapterLinks = document.querySelectorAll('.chapter-link');
     const checkboxes = document.querySelectorAll('.chapter-done');
     const progressFill = document.querySelector('.progress-fill');
     const progressText = document.querySelector('.progress-text');
 
-    // Récupère l'ID du CPT à partir de l'attribut data-post-id du lecteur
     const postId = playerElement.dataset.postId;
-    // Si l'ID n'est pas défini, on sort pour éviter les bugs
-    if (!postId) return; 
+    if (!postId) return;
 
     const player = new Plyr(playerElement, {
         controls: ['play', 'progress', 'current-time', 'duration',
-                   'mute', 'volume', 'settings', 'download'],
+            'mute', 'volume', 'settings', 'download'],
         settings: ['speed'],
         speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
     });
@@ -30,11 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
         progressText.textContent = done + " / " + total + " cours terminés";
     }
 
-    // --- Restaurer état ---
+    // --- Restaurer état des checkboxes ---
     checkboxes.forEach(cb => {
         const chapId = cb.dataset.id;
-        // Utilisez l'ID du post dans la clé de localStorage pour la rendre unique
-        const key = "chapter_done_" + postId + "_" + chapId; 
+        const key = "chapter_done_" + postId + "_" + chapId;
         const saved = localStorage.getItem(key);
         if (saved === "true") {
             cb.checked = true;
@@ -52,31 +48,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // --- Clic chapitre ---
+    // --- Gestion du clic sur toute la ligne du chapitre ---
+    const chapters = document.querySelectorAll(".dourousi-chapter");
     const titleDisplay = document.getElementById('current-title-display');
 
-    chapterLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const newSrc = this.getAttribute('data-audio');
-            const chapId = this.getAttribute('data-id');
-            const chapTitle = this.textContent.trim(); // Récupère le texte du lien, c'est le titre
+    chapters.forEach(chapter => {
+        chapter.addEventListener("click", function (e) {
+            // Si on clique sur la checkbox ou le label, ne pas lancer l'audio
+            if (e.target.closest('input') || e.target.closest('label')) return;
+
+            const audioUrl = this.dataset.audio;
+            const chapId = this.dataset.id;
+            const chapTitle = this.querySelector(".chapter-title").textContent.trim();
 
             currentChapterId = chapId;
 
+            // Lancer l'audio
             player.source = {
                 type: 'audio',
-                sources: [{ src: newSrc, type: 'audio/mp3' }]
+                sources: [{ src: audioUrl, type: 'audio/mp3' }]
             };
             player.play();
-            
-            // Met à jour le titre affiché à côté du lecteur
-            if (titleDisplay) {
-                titleDisplay.textContent = chapTitle;
-            }
 
-            chapterLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
+            // Mettre à jour le titre affiché
+            if (titleDisplay) titleDisplay.textContent = chapTitle;
+
+            // Gérer la classe active
+            // Retire la classe active de tous les titres
+            document.querySelectorAll(".chapter-title").forEach(t => t.classList.remove("active"));
+
+            // Ajoute active au titre du chapitre cliqué
+            const title = this.querySelector(".chapter-title");
+            if (title) title.classList.add("active");
         });
     });
 
@@ -85,8 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentChapterId !== null) {
             const cb = document.querySelector('.chapter-done[data-id="' + currentChapterId + '"]');
             if (cb && !cb.checked) {
-                // Utilisez l'ID du post dans la clé de localStorage
-                const key = "chapter_done_" + postId + "_" + currentChapterId; 
+                const key = "chapter_done_" + postId + "_" + currentChapterId;
                 cb.checked = true;
                 localStorage.setItem(key, true);
                 cb.closest("li").classList.add("completed");
@@ -96,20 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     updateProgress();
-
-    const chapters = document.querySelectorAll(".dourousi-chapter");
-
-            chapters.forEach(chapter => {
-                chapter.addEventListener("click", function () {
-                // Supprimer "active" sur les autres
-                chapters.forEach(c => c.classList.remove("active"));
-                // Ajouter "active" à celui cliqué
-                this.classList.add("active");
-                });
-            });
-        
-
 });
+
 
 
 

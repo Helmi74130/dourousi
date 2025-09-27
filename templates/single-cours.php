@@ -128,76 +128,63 @@ if (have_posts()) :
   <!-- Liste des chapitres -->
   <ul class="dourousi-chapters-list">
     <?php foreach ($chapters as $index => $chapter) :
-            $title     = isset($chapter['title']) ? $chapter['title'] : 'Chapitre ' . ($index + 1);
-            $audio_id  = isset($chapter['audio_id']) ? intval($chapter['audio_id']) : 0;
-            $audio_url = $audio_id ? wp_get_attachment_url($audio_id) : '';
+        $title     = isset($chapter['title']) ? $chapter['title'] : 'Chapitre ' . ($index + 1);
+        $audio_id  = isset($chapter['audio_id']) ? intval($chapter['audio_id']) : 0;
+        $audio_url = $audio_id ? wp_get_attachment_url($audio_id) : '';
 
-            if ($audio_url) : ?>
-    <li class="dourousi-chapter" data-id="<?php echo $index; ?>">
-      <a href="#" class="chapter-link" data-audio="<?php echo esc_url($audio_url); ?>" data-id="<?php echo $index; ?>">
-        <?php echo esc_html($title); ?>
-      </a>
+        if ($audio_url) : ?>
+    <li class="dourousi-chapter" data-audio="<?php echo esc_url($audio_url); ?>" data-id="<?php echo $index; ?>">
+
+      <span class="chapter-title"><?php echo esc_html($title); ?></span>
+
       <label class="chapter-complete-label">
         <input type="checkbox" class="chapter-done" data-id="<?php echo $index; ?>">
         <span></span> <?php esc_html_e("J'ai terminé ce cours", "dourousi"); ?>
       </label>
-
     </li>
-    <?php endif; ?>
-    <?php endforeach; ?>
+    <?php endif; endforeach; ?>
   </ul>
+
 
   <?php endif; ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-  <div class="dourousi-content">
-    <?php the_content(); ?>
-  </div>
-
-
   <?php
-      $categories = get_terms(array(
-        'taxonomy'   => 'categorie_cours',
-        'hide_empty' => true,
-        'orderby'    => 'rand',
-        'number'     => 3,
-        'object_ids' => get_posts(array(
-          'post_type'      => 'cours',
-          'posts_per_page' => -1,
-          'fields'         => 'ids',
-        )),
-      ));
+      $options = get_option('dourousi_options');
+      $show_categories = isset($options['show_categories_section']) && $options['show_categories_section'];
 
-      if (!empty($categories) && !is_wp_error($categories)) : ?>
+      if ($show_categories) :
+        $categories = get_terms(array(
+          'taxonomy'   => 'categorie_cours',
+          'hide_empty' => true,
+          'orderby'    => 'rand',
+          'number'     => 3,
+          'object_ids' => get_posts(array(
+            'post_type'      => 'cours',
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+          )),
+        ));
+
+        if (!empty($categories) && !is_wp_error($categories)) : ?>
   <div class="dourousi-category-section">
     <h2><?php esc_html_e('Explorer aussi ces catégories', 'dourousi'); ?></h2>
 
     <div class="dourousi-category-grid">
       <?php foreach ($categories as $term) :
-              $count = new WP_Query(array(
-                'post_type'      => 'cours',
-                'posts_per_page' => -1,
-                'tax_query'      => array(
-                  array(
-                    'taxonomy' => 'categorie_cours',
-                    'field'    => 'term_id',
-                    'terms'    => $term->term_id,
+                $count = new WP_Query(array(
+                  'post_type'      => 'cours',
+                  'posts_per_page' => -1,
+                  'tax_query'      => array(
+                    array(
+                      'taxonomy' => 'categorie_cours',
+                      'field'    => 'term_id',
+                      'terms'    => $term->term_id,
+                    ),
                   ),
-                ),
-              ));
-              $cours_count = $count->found_posts;
-            ?>
+                ));
+                $cours_count = $count->found_posts;
+              ?>
       <div class="dourousi-card-content">
         <h3><?php echo esc_html($term->name); ?></h3>
         <p><?php echo intval($cours_count); ?> cours</p>
@@ -209,7 +196,13 @@ if (have_posts()) :
     </div>
   </div>
   <?php endif; ?>
+  <?php endif; ?>
 
+
+
+  <div class="dourousi-content">
+    <?php the_content(); ?>
+  </div>
 
 
 

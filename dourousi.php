@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Dourousi
  * Description: Permet de créer un CPT "cours" avec meta (auteur, nom du livre, PDF, image à la une, lien externe) et des chapitres audio répétables.
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author: Helmi
  * Text Domain: dourousi
  */

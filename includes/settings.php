@@ -29,12 +29,22 @@ add_action('admin_init', function () {
         null,
         'dourousi-settings'
     );
+    // Case à cocher "Afficher la section Catégories"
+    add_settings_field(
+        'show_categories_section',
+        __('Afficher la section Catégories dans la page du cour ?', 'dourousi'),
+        'dourousi_show_categories_field',
+        'dourousi-settings',
+        'dourousi_main_section'
+    );
+
+    
 
     // Section principale pour la personnalisation du lecteur
     add_settings_section(
         'dourousi_main_section',
         __('Personnalisation des couleurs du lecteur audio (Front-end)', 'dourousi'),
-        'dourousi_main_section_callback', // Callback pour une description facultative de la section
+        'dourousi_main_section_callback',
         'dourousi-settings'
     );
 
@@ -119,6 +129,14 @@ function dourousi_custom_slug_field()
     echo '<input type="text" name="dourousi_options[custom_slug]" value="' . esc_attr($value) . '" />';
     echo '<p class="description">' . __('Exemple : cours, formations, audio...', 'dourousi') . '</p>';
 }
+
+    function dourousi_show_categories_field()
+    {
+        $options = get_option('dourousi_options');
+        $checked = isset($options['show_categories_section']) ? (bool) $options['show_categories_section'] : false;
+        echo '<label><input type="checkbox" name="dourousi_options[show_categories_section]" value="1" ' . checked(1, $checked, false) . '> ' . __('Oui, afficher cette section sur les pages de cours', 'dourousi') . '</label>';
+    }
+
 
 /**
  * 3. Callbacks des champs de couleur (Input HTML)
