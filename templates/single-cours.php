@@ -10,13 +10,14 @@ if (have_posts()) :
         $pdf_id = intval(get_post_meta($post_id, '_dourousi_pdf_id', true));
         $external = get_post_meta($post_id, '_dourousi_external', true);
         $chapters = get_post_meta($post_id, '_dourousi_chapters', true);
-
+        $durations = dourousi_get_course_duration( get_the_ID() );
         $auteur = wp_get_post_terms($post_id, 'savant', array('fields' => 'names'));
         $auteur_list = !empty($auteur) ? implode(', ', $auteur) : '';
 
         $difficulty = wp_get_post_terms($post_id, 'difficulte', array('fields' => 'names'));
 
         $categories = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names'));
+        
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('dourousi-course'); ?>>
@@ -79,19 +80,20 @@ if (have_posts()) :
     </div>
 
   </div>
-
-
-
   <?php
-            $chapters = get_post_meta(get_the_ID(), '_dourousi_chapters', true);
+$chapters = get_post_meta(get_the_ID(), '_dourousi_chapters', true);
 
             if (is_array($chapters) && !empty($chapters)) :
                 // Prendre la première piste comme "par défaut"
                 $first_chapter = $chapters[0];
                 $first_audio_id = isset($first_chapter['audio_id']) ? intval($first_chapter['audio_id']) : 0;
-                $first_audio_url = $first_audio_id ? wp_get_attachment_url($first_audio_id) : '';
-            ?>
+                $first_audio_url = $first_audio_id ? wp_get_attachment_url($first_audio_id) : ''; ?>
   <div class="wii-dourousi-chapters">
+    <div class="dourousi-course-duration">
+    <p><strong>⏳ Durée totale du cours :</strong> 
+        <?php echo dourousi_format_duration( $durations['total'] ); ?>
+    </p>
+</div>
     <div class="dourousi-progress">
       <div class="progress-bar">
         <div class="progress-fill" style="width:0%"></div>
@@ -139,14 +141,25 @@ if (have_posts()) :
 
 
 
-  <?php if ($difficulty) : ?>
-  <p><strong>Difficulté :</strong> <?php echo esc_html(implode(', ', $difficulty)); ?></p>
-  <?php endif; ?>
+<div class="course-meta-tags">
+    <?php if ($difficulty) : ?>
+        <p class="meta-line meta-difficulty">
+            <strong>Difficulté :</strong>
+            <?php foreach ($difficulty as $term) : ?>
+                <span class="meta-tag difficulty-tag"><?php echo esc_html($term); ?></span>
+            <?php endforeach; ?>
+        </p>
+    <?php endif; ?>
 
-  <?php if ($categories) : ?>
-  <p><strong>Catégories :</strong> <?php echo esc_html(implode(', ', $categories)); ?></p>
-  <?php endif; ?>
-
+    <?php if ($categories) : ?>
+        <p class="meta-line meta-categories">
+            <strong>Catégories :</strong>
+            <?php foreach ($categories as $term) : ?>
+                <span class="meta-tag category-tag"><?php echo esc_html($term); ?></span>
+            <?php endforeach; ?>
+        </p>
+    <?php endif; ?>
+</div>
 
 
 

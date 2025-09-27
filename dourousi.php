@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: DOUROUSI
+ * Plugin Name: Dourousi
  * Description: Permet de créer un CPT "cours" avec meta (auteur, nom du livre, PDF, image à la une, lien externe) et des chapitres audio répétables.
  * Version: 0.1.0
  * Author: Helmi
@@ -19,6 +19,7 @@ require_once DOUROUSI_PLUGIN_DIR . 'includes/assets.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/cpt.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/meta-fields.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/settings.php';
+require_once DOUROUSI_PLUGIN_DIR . 'includes/time-listen.php';
 
 add_filter('template_include', function($template) {
     if (is_singular('cours')) {

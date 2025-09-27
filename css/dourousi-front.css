@@ -767,3 +767,79 @@
     font-size: 1.6rem;
   }
 }
+
+
+
+
+
+
+.dourousi-course-duration {
+  text-align: center;
+}
+
+.dourousi-course-duration strong {
+  color: var(--dourousi-color-text);
+}
+
+
+
+/* Conteneur global pour les métadonnées */
+.course-meta-tags {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #e0e0e0;
+}
+
+/* Style de chaque ligne (Difficulté et Catégories) */
+.course-meta-tags .meta-line {
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    display: flex; /* Permet un alignement en ligne */
+    align-items: center;
+    flex-wrap: wrap; /* Assure que les tags passent à la ligne si besoin */
+}
+
+.course-meta-tags strong {
+    font-weight: 700;
+    color: var(--dourousi-color-text, #343a40); /* Utilise la couleur du texte */
+    margin-right: 10px;
+    flex-shrink: 0; /* Empêche le titre de réduire sa taille */
+}
+
+/* Style général du badge (Tag) */
+.course-meta-tags .meta-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 3px 5px 3px 0;
+    border-radius: 20px; /* Bords très arrondis pour l'effet de tag */
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+
+/* 🟢 Style spécifique pour les Tags de DIFFICULTÉ */
+.course-meta-tags .difficulty-tag {
+    /* Utilisation de la couleur secondaire pour mettre en avant la difficulté */
+    background-color: var(--dourousi-color-secondary, #ff9800);
+    color: #ffffff; /* Texte blanc sur fond coloré */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course-meta-tags .difficulty-tag:hover {
+    background-color: #e68900; /* Assombrissement au survol */
+}
+
+/* 🟦 Style spécifique pour les Tags de CATÉGORIES */
+.course-meta-tags .category-tag {
+    /* Utilisation d'une couleur d'arrière-plan neutre ou de la couleur principale */
+    background-color: #f1f3f5;
+    color: #555;
+    border: 1px solid #e0e0e0;
+}
+
+.course-meta-tags .category-tag:hover {
+    background-color: #e9ecef;
+    color: var(--dourousi-color-main, #2b8a3e);
+}

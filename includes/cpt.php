@@ -25,7 +25,7 @@ function dourousi_register_cpt() {
     $labels = array(
         'name'               => 'Cours',
         'singular_name'      => 'Cours',
-        'menu_name'          => 'DOUROUSI Cours',
+        'menu_name'          => 'Dourousi',
         'name_admin_bar'     => 'Cours',
         'add_new'            => 'Ajouter',
         'add_new_item'       => 'Ajouter un cours',
