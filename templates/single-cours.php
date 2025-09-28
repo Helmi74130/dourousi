@@ -1,7 +1,8 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-get_header(); // ou partie de ton thème
+// 1. Début du fichier : Récupération du header
+get_header();
 
 if (have_posts()) :
   while (have_posts()) : the_post();
@@ -10,14 +11,15 @@ if (have_posts()) :
     $pdf_id = intval(get_post_meta($post_id, '_dourousi_pdf_id', true));
     $external = get_post_meta($post_id, '_dourousi_external', true);
     $chapters = get_post_meta($post_id, '_dourousi_chapters', true);
-    $durations = dourousi_get_course_duration(get_the_ID());
+
+    // Assurez-vous que cette fonction existe dans votre plugin
+    $durations = function_exists('dourousi_get_course_duration') ? dourousi_get_course_duration(get_the_ID()) : ['total' => 0];
+
     $auteur = wp_get_post_terms($post_id, 'savant', array('fields' => 'names'));
     $auteur_list = !empty($auteur) ? implode(', ', $auteur) : '';
 
     $difficulty = wp_get_post_terms($post_id, 'difficulte', array('fields' => 'names'));
-
-    $categories = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names'));
-
+    $categories_meta = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names')); // Renommé pour éviter le conflit
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('dourousi-course'); ?>>
@@ -46,9 +48,9 @@ if (have_posts()) :
             <?php
                 $is_complete = get_post_meta(get_the_ID(), '_dourousi_is_complete', true);
                 if ($is_complete === '1') {
-                  echo '<span class="wii-dourousi-badge wii-badge-complet"><i class="fa-solid fa-check"></i> Cours complet</span>';
+                  echo '<span class="wii-dourousi-badge wii-badge-complet"><i class="fa-solid fa-check"></i> ' . esc_html__('Cours complet', 'dourousi') . '</span>';
                 } else {
-                  echo '<span class="wii-dourousi-badge wii-badge-incomplet"><i class="fa-regular fa-hourglass"></i> En cours</span>';
+                  echo '<span class="wii-dourousi-badge wii-badge-incomplet"><i class="fa-regular fa-hourglass"></i> ' . esc_html__('En cours', 'dourousi') . '</span>';
                 }
                 ?>
           </div>
@@ -56,11 +58,13 @@ if (have_posts()) :
         <h1><?php the_title(); ?></h1>
         <div class="wii-hero-meta">
           <?php if ($auteur_list) : ?>
-          <p class="wii-author"><strong>Auteur :</strong> <?php echo esc_html($auteur_list); ?></p>
+          <p class="wii-author"><strong><?php esc_html_e('Auteur :', 'dourousi'); ?></strong>
+            <?php echo esc_html($auteur_list); ?></p>
           <?php endif; ?>
 
           <?php if ($nom_livre) : ?>
-          <p class="wii-book"><strong>Livre :</strong> <?php echo esc_html($nom_livre); ?></p>
+          <p class="wii-book"><strong><?php esc_html_e('Livre :', 'dourousi'); ?></strong>
+            <?php echo esc_html($nom_livre); ?></p>
           <?php endif; ?>
         </div>
         <div class="wii-dourousi-excerpt">
@@ -74,7 +78,8 @@ if (have_posts()) :
                 $pdf_url = wp_get_attachment_url($pdf_id); ?>
           <p class="wii-attachment">
             <a href="<?php echo esc_url($pdf_url); ?>" download>
-              <span class="wii-icon"><i class="fa-solid fa-download"></i></span> Télécharger le PDF
+              <span class="wii-icon"><i class="fa-solid fa-download"></i></span>
+              <?php esc_html_e('Télécharger le PDF', 'dourousi'); ?>
             </a>
           </p>
           <?php endif; ?>
@@ -82,7 +87,8 @@ if (have_posts()) :
           <?php if ($external) : ?>
           <p class="wii-external">
             <a href="<?php echo esc_url($external); ?>" target="_blank" rel="noopener noreferrer">
-              <span class="wii-icon"><i class="fa-solid fa-link"></i></span> Ressources externes
+              <span class="wii-icon"><i class="fa-solid fa-link"></i></span>
+              <?php esc_html_e('Ressources externes', 'dourousi'); ?>
             </a>
           </p>
           <?php endif; ?>
@@ -102,15 +108,16 @@ if (have_posts()) :
         $first_audio_url = $first_audio_id ? wp_get_attachment_url($first_audio_id) : ''; ?>
   <div class="wii-dourousi-chapters">
     <div class="dourousi-course-duration">
-      <p><strong>Durée totale du cours :</strong>
-        <?php echo dourousi_format_duration($durations['total']); ?>
+      <p><strong><?php esc_html_e('Durée totale du cours :', 'dourousi'); ?></strong>
+        <?php echo $durations ? dourousi_format_duration($durations['total']) : 'N/A'; ?>
       </p>
     </div>
     <div class="dourousi-progress">
       <div class="progress-bar">
         <div class="progress-fill" style="width:0%"></div>
       </div>
-      <div class="progress-text">0 / <?php echo count($chapters); ?> cours terminés</div>
+      <div class="progress-text">0 / <?php echo count($chapters); ?> <?php esc_html_e('cours terminés', 'dourousi'); ?>
+      </div>
     </div>
     <div class="custom-audio-container">
       <div class="current-chapter-title">
@@ -125,24 +132,26 @@ if (have_posts()) :
       </div>
     </div>
   </div>
-  <!-- Liste des chapitres -->
   <ul class="dourousi-chapters-list">
     <?php foreach ($chapters as $index => $chapter) :
-        $title     = isset($chapter['title']) ? $chapter['title'] : 'Chapitre ' . ($index + 1);
-        $audio_id  = isset($chapter['audio_id']) ? intval($chapter['audio_id']) : 0;
-        $audio_url = $audio_id ? wp_get_attachment_url($audio_id) : '';
+            $title   = isset($chapter['title']) ? $chapter['title'] : 'Chapitre ' . ($index + 1);
+            $audio_id   = isset($chapter['audio_id']) ? intval($chapter['audio_id']) : 0;
+            $audio_url = $audio_id ? wp_get_attachment_url($audio_id) : '';
 
-        if ($audio_url) : ?>
+            if ($audio_url) : ?>
     <li class="dourousi-chapter" data-audio="<?php echo esc_url($audio_url); ?>" data-id="<?php echo $index; ?>">
 
-      <span class="chapter-title"><?php echo esc_html($title); ?></span>
+      <span class="chapter-content-wrapper">
+        <span class="chapter-title"><?php echo esc_html($title); ?></span>
+      </span>
 
       <label class="chapter-complete-label">
         <input type="checkbox" class="chapter-done" data-id="<?php echo $index; ?>">
         <span></span> <?php esc_html_e("J'ai terminé ce cours", "dourousi"); ?>
       </label>
     </li>
-    <?php endif; endforeach; ?>
+    <?php endif;
+          endforeach; ?>
   </ul>
 
 
@@ -154,56 +163,57 @@ if (have_posts()) :
       $show_categories = isset($options['show_categories_section']) && $options['show_categories_section'];
 
       if ($show_categories) :
-        $categories = get_terms(array(
+        $categories_query = get_terms(array(
           'taxonomy'   => 'categorie_cours',
           'hide_empty' => true,
-          'orderby'    => 'rand',
-          'number'     => 3,
+          'orderby'   => 'rand',
+          'number'   => 3,
           'object_ids' => get_posts(array(
-            'post_type'      => 'cours',
+            'post_type'   => 'cours',
             'posts_per_page' => -1,
-            'fields'         => 'ids',
+            'fields'     => 'ids',
           )),
         ));
 
-        if (!empty($categories) && !is_wp_error($categories)) : ?>
+        if (!empty($categories_query) && !is_wp_error($categories_query)) : ?>
   <div class="dourousi-category-section">
     <h2><?php esc_html_e('Explorer aussi ces catégories', 'dourousi'); ?></h2>
 
     <div class="dourousi-category-grid">
-      <?php foreach ($categories as $term) :
+      <?php foreach ($categories_query as $term) :
                 $count = new WP_Query(array(
-                  'post_type'      => 'cours',
+                  'post_type'   => 'cours',
                   'posts_per_page' => -1,
-                  'tax_query'      => array(
+                  'tax_query'   => array(
                     array(
                       'taxonomy' => 'categorie_cours',
-                      'field'    => 'term_id',
-                      'terms'    => $term->term_id,
+                      'field'   => 'term_id',
+                      'terms'   => $term->term_id,
                     ),
                   ),
                 ));
                 $cours_count = $count->found_posts;
+                wp_reset_postdata(); // Important : réinitialiser après une nouvelle requête
               ?>
       <div class="dourousi-card-content">
         <h3><?php echo esc_html($term->name); ?></h3>
-        <p><?php echo intval($cours_count); ?> cours</p>
+        <p><?php echo intval($cours_count); ?> <?php esc_html_e('cours', 'dourousi'); ?></p>
         <a href="<?php echo esc_url(get_term_link($term)); ?>" class="dourousi-btn">
-          Voir la catégorie
+          <?php esc_html_e('Voir la catégorie', 'dourousi'); ?>
         </a>
       </div>
       <?php endforeach; ?>
     </div>
   </div>
-  <?php endif; ?>
-  <?php endif; ?>
-
+  <?php endif; // Fin if (!empty($categories_query) 
+        ?>
+  <?php endif; // Fin if ($show_categories) 
+      ?>
 
 
   <div class="dourousi-content">
     <?php the_content(); ?>
   </div>
-
 
 
   <div class="dourousi-navigation">
@@ -233,11 +243,11 @@ if (have_posts()) :
   </div>
 
 
-
 </article>
 
 <?php
   endwhile;
 endif;
 
+// 2. Fin du fichier : Appel du footer
 get_footer();
