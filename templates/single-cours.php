@@ -46,9 +46,9 @@ if (have_posts()) :
             <?php
                 $is_complete = get_post_meta(get_the_ID(), '_dourousi_is_complete', true);
                 if ($is_complete === '1') {
-                  echo '<span class="wii-dourousi-badge wii-badge-complet">✅ Cours complet</span>';
+                  echo '<span class="wii-dourousi-badge wii-badge-complet"><i class="fa-solid fa-check"></i> Cours complet</span>';
                 } else {
-                  echo '<span class="wii-dourousi-badge wii-badge-incomplet">⏳ En cours</span>';
+                  echo '<span class="wii-dourousi-badge wii-badge-incomplet"><i class="fa-regular fa-hourglass"></i> En cours</span>';
                 }
                 ?>
           </div>

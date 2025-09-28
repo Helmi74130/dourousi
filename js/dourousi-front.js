@@ -7,12 +7,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const postId = playerElement.dataset.postId;
     if (!postId) return;
 
+    // Détermine si l'on est sur un grand écran
+    const isDesktopDevice = window.innerWidth > 768; 
+
+    // 1. Définir les contrôles de base (communs à tous les appareils)
+    let controlsList = [
+        'play', 
+        'progress', 
+        'current-time', 
+        'duration',
+        'download'
+        
+    ];
+
+    // 2. Ajouter les contrôles de volume UNIQUEMENT si c'est un PC
+    if (isDesktopDevice) {
+        // Ajouter 'mute' et 'volume' à la liste des contrôles
+        controlsList.push('settings',  );
+    }
+
+    // 3. Initialiser Plyr avec la liste de contrôles dynamique
     const player = new Plyr(playerElement, {
-        controls: ['play', 'progress', 'current-time', 'duration',
-            'mute', 'volume', 'settings', 'download'],
-        settings: ['speed'],
+        controls: controlsList, // La liste ajustée
+        settings: ['speed'], // Options dans le menu des paramètres
         speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
+        
     });
+
 
     let currentChapterId = null;
 

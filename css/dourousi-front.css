@@ -196,21 +196,6 @@
   color: var(--dourousi-color-main);
 }
 
-/* Style de l'icône de lecture */
-/* icône de lecture à gauche du chapitre, attachée au li */
-/*.chapter-title::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    content: "\f144"; 
-    margin-right: 10px;
-    color: var(--dourousi-color-main);
-    transition: all 0.3s ease;
-    display: inline-block;
-}*/
-
-
-/* Chapitre actif (lecture en cours) */
-
 
 
 /* Styles pour la case à cocher */
@@ -228,9 +213,11 @@
   white-space: nowrap;
   /* Empêche le texte de se briser sur plusieurs lignes */
 }
+
 .chapter-complete-label:hover {
   transform: translateY(-2px);
 }
+
 .chapter-done {
   display: none;
 }
@@ -271,6 +258,10 @@
 
   .chapter-complete-label {
     margin-top: 10px;
+    font-size: 0.7rem;
+    gap: 5px;
+    padding: 0px 10px;
+    border-radius: 2px;
   }
 
   .dourousi-chapter .chapter-link {
@@ -290,8 +281,10 @@
 
 /* Lecteur audio principal */
 
-.cstom-audio audio {
-  width: 100%;
+
+.custom-audio {
+
+  display: contents;
 }
 
 /* Styles pour le lecteur audio Plyr */
@@ -366,9 +359,10 @@
 @media (max-width: 768px) {
   .custom-audio-container {
     flex-direction: column;
-    
+
   }
-  #current-title-display{
+
+  #current-title-display {
     padding: 0;
   }
 
@@ -376,6 +370,14 @@
     width: 100%;
     padding: 10px;
     font-size: 1em;
+  }
+  .chapter-done+span {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--dourousi-color-text);
+  }
+  .chapter-done:checked+span::after {
+    font-size: 8px;
   }
 }
 
@@ -436,6 +438,15 @@
   font-weight: 600;
 }
 
+.chapter-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Chapitre actif (lecture en cours) */
+.chapter-title.active {
+  font-weight: 700;
+}
 
 /* Ajouter indicateur de lecture */
 .chapter-title::before {
@@ -449,12 +460,10 @@
 .chapter-title.active::before {
   display: inline-block;
   content: "\1F56A";
-  /* Unicode de fa-volume-xmark */
   margin-right: 10px;
   font-size: 32px;
   color: var(--dourousi-color-main);
   transform: rotate(180deg);
-
 }
 
 /* Chapitre actif (lecture en cours) */
@@ -702,11 +711,6 @@
     /* plein écran sur mobile */
   }
 
-  .wii-hero-left h1 {
-    font-size: 1.6rem;
-    margin-top: 20px;
-  }
-
   .wii-dourousi-excerpt {
     font-size: 0.95rem;
     line-height: 1.4;
@@ -721,6 +725,22 @@
     padding-left: 5%;
     padding-right: 5%;
   }
+  .wii-hero-left h1 {
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+    margin-top: 20px;
+  }
+  .wii-hero-meta{
+    margin-top: 15px;
+    line-height: 16px;
+  }
+  .wii-icon{
+    font-size: 0.8rem;
+  }
+  .meta-difficulty{
+    margin-top: 20px !important;
+  }
+
   .wii-dourousi-chapters {
     margin-left: 5%;
     margin-right: 5%;
@@ -738,9 +758,6 @@
     font-size: 0.95rem;
   }
 
-  .chapter-complete-label {
-    font-size: 0.8rem;
-  }
 }
 
 /* ========================= */
@@ -763,20 +780,6 @@
   }
 }
 
-/* ========================= */
-/* RESPONSIVE NAVIGATION     */
-/* ========================= */
-@media (max-width: 768px) {
-  .dourousi-navigation {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-  }
-
-  .dourousi-navigation a {
-    justify-content: center;
-  }
-}
 
 /* ========================= */
 /* RESPONSIVE CATEGORY GRID  */
@@ -785,6 +788,9 @@
   .dourousi-category-grid {
     gap: 15px;
   }
+  .plyr--audio .plyr__controls {
+  padding: 10px !important;
+}
 }
 
 @media (max-width: 600px) {
