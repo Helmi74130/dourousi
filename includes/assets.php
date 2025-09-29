@@ -95,3 +95,23 @@ function dourousi_enqueu_front_settings_css($hook) {
 }
 
 add_action('admin_enqueue_scripts', 'dourousi_enqueu_front_settings_css');
+
+
+/**
+ * Enfilement du style Font Awesome pour le plugin Dourousi.
+ */
+function dourousi_enqueue_font_awesome() {
+    // Vérifiez si Font Awesome n'a pas déjà été enfilé par le thème ou un autre plugin
+    if ( ! wp_style_is( 'font-awesome', 'enqueued' ) && ! wp_style_is( 'font-awesome', 'registered' ) ) {
+        
+        // Option 1: Charger Font Awesome 6 (Recommandé)
+        // Note: Remplacez cette URL par l'URL CDN officielle de FA 6
+        wp_enqueue_style( 
+            'font-awesome', 
+            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css', 
+            array(), 
+            '6.5.2' 
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'dourousi_enqueue_font_awesome' );

@@ -1,0 +1,246 @@
+/* ============================
+   HERO SECTION MODERNE
+============================ */
+.wii-hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url(''); /* ton image dynamique via PHP */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Overlay sombre avec dégradé et effet léger de texture */
+.wii-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.895), rgba(0, 0, 0, 0.689));
+  z-index: 0;
+  backdrop-filter: brightness(0.9);
+}
+
+/* Contenu centré */
+.wii-hero-content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 2rem;
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Animation légère du contenu */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Texte du titre avec effet “glassy” moderne */
+.wii-course-details h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #fff;
+  display: inline-block;
+}
+
+/* Extrait avec effet “glass” */
+.wii-dourousi-excerpt p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #e0e7ff;
+  background: rgba(0,0,0,0.25);
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  display: inline-block;
+}
+
+/* CTA modernes */
+.wii-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--dourousi-color-main);
+  color: var(--dourousi-color-text);
+  font-weight: 600;
+  border-radius: 2rem;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+}
+
+.wii-link a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+/* Meta tags badges glass */
+.meta-tag,
+.wii-dourousi-badge {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(5px);
+  color: #fff;
+}
+.wii-badge-complet{
+  background: rgb(125, 173, 54);
+  color: black;
+}
+
+
+/* ============================
+   PLAYER SECTION
+============================ */
+.wii-course-player-section {
+  padding: 4rem 2rem;
+  background: #f9fafb;
+}
+
+.dourousi-course-duration p {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.dourousi-progress {
+  margin: 1.5rem 0;
+}
+
+.progress-bar {
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-fill {
+  background: var(--dourousi-color-secondary);
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease-in-out;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: #6b7280;
+}
+
+/* Chapitres */
+.dourousi-chapters-list {
+  margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.dourousi-chapter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dourousi-chapter:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+
+.chapter-title {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ============================
+   CATEGORY SECTION
+============================ */
+.dourousi-category-section {
+  padding: 4rem 2rem;
+  background: #fff;
+}
+
+.dourousi-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.dourousi-card-content {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dourousi-card-content:hover {
+  background: #f3f4f6;
+  transform: translateY(-4px);
+}
+
+.dourousi-card-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.dourousi-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background: var(--dourousi-color-main);
+  color: var(--dourousi-color-text);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.dourousi-btn:hover {
+  color: var(--dourousi-color-main);
+  color: var(--dourousi-color-text);
+}
+
+/* ============================
+   NAVIGATION
+============================ */
+.dourousi-navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.dourousi-navigation a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #060606;
+  transition: color 0.3s ease;
+}
+
