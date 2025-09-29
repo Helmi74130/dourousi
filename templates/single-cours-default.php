@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-// 1. Début du fichier : Récupération du header
+
 get_header();
 
 if (have_posts()) :
@@ -11,15 +11,16 @@ if (have_posts()) :
     $pdf_id = intval(get_post_meta($post_id, '_dourousi_pdf_id', true));
     $external = get_post_meta($post_id, '_dourousi_external', true);
     $chapters = get_post_meta($post_id, '_dourousi_chapters', true);
+    $commentateur = get_post_meta($post_id, '_dourousi_commentateur',true);
 
-    // Assurez-vous que cette fonction existe dans votre plugin
     $durations = function_exists('dourousi_get_course_duration') ? dourousi_get_course_duration(get_the_ID()) : ['total' => 0];
 
     $auteur = wp_get_post_terms($post_id, 'savant', array('fields' => 'names'));
     $auteur_list = !empty($auteur) ? implode(', ', $auteur) : '';
 
     $difficulty = wp_get_post_terms($post_id, 'difficulte', array('fields' => 'names'));
-    $categories_meta = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names')); // Renommé pour éviter le conflit
+    $categories_meta = wp_get_post_terms($post_id, 'categorie_cours', array('fields' => 'names'));
+    
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('dourousi-course'); ?>>
@@ -56,7 +57,12 @@ if (have_posts()) :
           </div>
         </div>
         <h1><?php the_title(); ?></h1>
-        <div class="wii-hero-meta">
+        <div class="wii-hero-meta wii-hero-meta-top">
+          <?php if ($commentateur) : ?>
+          <p class="wii-author"><strong><?php esc_html_e('Commentaire :', 'dourousi'); ?></strong>
+            <?php echo esc_html($commentateur); ?></p>
+          <?php endif; ?>
+
           <?php if ($auteur_list) : ?>
           <p class="wii-author"><strong><?php esc_html_e('Auteur :', 'dourousi'); ?></strong>
             <?php echo esc_html($auteur_list); ?></p>
@@ -157,7 +163,6 @@ if (have_posts()) :
 
   <?php endif; ?>
 
-
   <?php
       $options = get_option('dourousi_options');
       $show_categories = isset($options['show_categories_section']) && $options['show_categories_section'];
@@ -177,7 +182,6 @@ if (have_posts()) :
 
         if (!empty($categories_query) && !is_wp_error($categories_query)) : ?>
   <div class="dourousi-category-section">
-    <h2><?php esc_html_e('Explorer aussi ces catégories', 'dourousi'); ?></h2>
 
     <div class="dourousi-category-grid">
       <?php foreach ($categories_query as $term) :
@@ -205,9 +209,9 @@ if (have_posts()) :
       <?php endforeach; ?>
     </div>
   </div>
-  <?php endif; // Fin if (!empty($categories_query) 
+  <?php endif; 
         ?>
-  <?php endif; // Fin if ($show_categories) 
+  <?php endif;
       ?>
 
 

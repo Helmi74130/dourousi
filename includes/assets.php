@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
  * Charger le CSS front-end du plugin
  */
 function dourousi_enqueue_front_css() {
-    if (is_singular('cours')) {
+    if (is_singular('cours') || is_post_type_archive('cours') || is_tax(array('savant', 'difficulte', 'categorie_cours'))) {
         wp_enqueue_style(
             'dourousi-front',
             DOUROUSI_PLUGIN_URL . 'css/dourousi-front.css',

@@ -1,0 +1,391 @@
+:root {
+  /* Couleurs de la marque */
+  --color-primary: #1e88e5; /* Bleu vibrant (changez-le pour votre marque) */
+  --color-primary-dark: #1565c0;
+  --color-primary-light: #64b5f6;
+  
+  /* Couleurs de fond et de texte */
+  --color-background: #f8f9fa; /* Gris très clair */
+  --color-surface: #ffffff; /* Blanc pour les cartes/contenu */
+  --color-text-dark: #343a40;
+  --color-text-light: #6c757d;
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+  /* Espacement */
+  --spacing-unit: 1rem; /* 16px */
+  --border-radius: 8px;
+}
+
+/* Base pour une meilleure accessibilité et lisibilité */
+.dourousi-course {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+  color: var(--color-text-dark);
+}
+
+.wii-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3); /* Espacement général entre les sections */
+}
+
+h1, h2, h3 {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Boutons de base */
+.wii-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.wii-course-hero {
+  display: flex;
+  flex-direction: column; /* Par défaut: Image puis Détails */
+  gap: calc(var(--spacing-unit) * 3);
+  padding: calc(var(--spacing-unit) * 2) 0;
+  border-bottom: 2px solid #eee;
+}
+
+@media (min-width: 992px) {
+  .wii-course-hero {
+    flex-direction: row; /* Sur grand écran: Colonnes côte à côte */
+    align-items: center;
+  }
+}
+
+.wii-course-details {
+  flex: 1;
+  order: 2; /* Les détails passent à droite sur desktop */
+}
+
+.wii-course-thumbnail-container {
+  flex: 0 0 40%; /* L'image prend 40% de la largeur sur desktop */
+  max-width: 400px;
+  order: 1; /* L'image passe à gauche sur desktop */
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.wii-course-thumbnail-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Tags de Méta */
+.course-meta-tags {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.meta-tag, .wii-dourousi-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.difficulty-tag {
+  background-color: var(--color-primary-light);
+  color: var(--color-surface);
+}
+
+.wii-badge-complet {
+  background-color: #4caf50; /* Vert pour complet */
+  color: white;
+}
+
+.wii-badge-incomplet {
+  background-color: #ff9800; /* Orange pour en cours */
+  color: var(--color-text-dark);
+}
+
+/* Auteur / Livre */
+.wii-course-authorship p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-light);
+}
+.wii-course-authorship strong {
+  color: var(--color-text-dark);
+}
+
+/* Boutons d'Action */
+.wii-course-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: calc(var(--spacing-unit) * 2);
+  flex-wrap: wrap;
+}
+
+.wii-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+.wii-btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.wii-btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.wii-btn-secondary:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-surface);
+}
+.wii-course-chapters-section {
+  background-color: var(--color-surface);
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: calc(var(--spacing-unit) * 2);
+}
+
+/* Zone du lecteur (Lecteur, progression, durée) */
+.wii-player-area {
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  padding-bottom: var(--spacing-unit);
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.dourousi-progress {
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  transition: width 0.4s ease;
+}
+
+.custom-audio-player-box {
+  margin: 1rem 0;
+}
+
+#main-audio-player {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.current-chapter-title {
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+/* Liste des Chapitres */
+.dourousi-chapters-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dourousi-chapter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dourousi-chapter:hover {
+  background-color: #f8f9fa;
+}
+
+.dourousi-chapter.active {
+  background-color: var(--color-primary-light);
+  color: var(--color-surface);
+  font-weight: 600;
+}
+
+.chapter-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.chapter-icon {
+    color: var(--color-primary);
+    transition: color 0.2s ease;
+}
+
+.dourousi-chapter.active .chapter-icon {
+    color: var(--color-surface); /* Icône blanche pour le chapitre actif */
+}
+
+/* Style de la checkbox de fin de cours (look moderne) */
+.chapter-complete-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+.dourousi-chapter.active .chapter-complete-label {
+    color: var(--color-surface);
+}
+
+.chapter-complete-label input[type="checkbox"] {
+  /* Masquer la checkbox native et utiliser le span pour le style */
+  opacity: 0;
+  position: absolute;
+}
+
+.chapter-complete-label span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.chapter-complete-label input[type="checkbox"]:checked + span {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Le "check" visuel */
+.chapter-complete-label input[type="checkbox"]:checked + span::after {
+  content: '\f00c'; /* Font Awesome check icon */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+}
+/* Contenu Longue Description */
+.wii-main-content {
+  padding: calc(var(--spacing-unit) * 2);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.dourousi-content {
+  line-height: 1.7;
+}
+
+/* Navigation Précédent/Suivant */
+.dourousi-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: calc(var(--spacing-unit) * 3);
+}
+
+.dourousi-prev, .dourousi-next {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: var(--color-text-dark);
+  transition: all 0.3s ease;
+}
+
+.dourousi-prev:hover, .dourousi-next:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.dourousi-nav-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dourousi-prev { justify-content: flex-start; }
+.dourousi-next { justify-content: flex-end; text-align: right; }
+
+.dourousi-prev span { margin-left: 1rem; }
+.dourousi-next span { margin-right: 1rem; }
+
+.dourousi-category-section {
+  padding: calc(var(--spacing-unit) * 2) 0;
+}
+
+.dourousi-category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: calc(var(--spacing-unit) * 1.5);
+  margin-top: calc(var(--spacing-unit) * 2);
+}
+
+.dourousi-card-content {
+  background-color: var(--color-surface);
+  padding: calc(var(--spacing-unit) * 2);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dourousi-card-content:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.dourousi-card-content h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.dourousi-card-content p {
+  color: var(--color-text-light);
+  flex-grow: 1; /* Pousse le bouton vers le bas */
+}
+
+.dourousi-btn {
+  /* Réutilisation du style de bouton pour l'action */
+  margin-top: 1rem;
+  align-self: flex-start; /* Aligner à gauche */
+  background-color: var(--color-primary-light);
+  color: var(--color-surface);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+.dourousi-btn:hover {
+    background-color: var(--color-primary);
+}

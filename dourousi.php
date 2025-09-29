@@ -21,6 +21,8 @@ require_once DOUROUSI_PLUGIN_DIR . 'includes/cpt.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/meta-fields.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/settings.php';
 require_once DOUROUSI_PLUGIN_DIR . 'includes/time-listen.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/templates-loader.php';
+
 
 add_filter('template_include', function ($template) {
     if (is_singular('cours')) {
