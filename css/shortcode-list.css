@@ -2,8 +2,8 @@
 .dourousi-courses-list {
   display: flex;
   flex-direction: column;
-  gap: 1px; /* Un petit espace pour la bordure */
-  background-color: #e9ecef; /* Couleur de fond pour les séparateurs */
+  gap: 1px; 
+  background-color: #e9ecef; 
   border-radius: 8px;
   overflow: hidden;
 }

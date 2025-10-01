@@ -1,16 +1,16 @@
-/* ============================================= */
-/* Styles pour la page d'archive "Dourousi"
-/* ============================================= */
+/*
+ * Styles pour la page d'archive "Dourousi" (Cours)
+ */
 
-/* --- Conteneur général --- */
+/* Conteneur général */
 .dourousi-archive-cours {
-    max-width: 1200px; /* Largeur maximale pour le contenu */
-    margin: 0 auto; /* Centrage de la page */
-    padding: 2rem 1.5rem; /* Marges intérieures */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* --- Titre de la page (ex: "Cours") --- */
+/* Titre de la page (ex: "Cours") */
 .dourousi-archive-cours h1 {
     text-align: center;
     font-size: 2.5rem;
@@ -21,62 +21,58 @@
     display: inline-block;
 }
 
-/* Centrage du H1 */
 .dourousi-archive-cours > h1 {
-    display: table;
     margin-left: auto;
     margin-right: auto;
 }
 
-
-/* --- Grille des cours --- */
-/* --- Grille des cours (version Flexbox) --- */
+/* Grille des cartes de cours (Flexbox) */
 .dourousi-cours-grid {
-    display: flex; /* On active le mode Flexbox */
-    flex-wrap: wrap; /* TRÈS IMPORTANT : permet aux cartes d'aller à la ligne */
-    gap: 2rem; /* Garde l'espace entre les cartes */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
-/* --- Style de chaque carte de cours --- */
+/* Style de chaque carte de cours */
 .dourousi-cours-card {
-    /* La nouvelle ligne ci-dessous est la clé ! */
-    flex: 1 1 320px; /* Explique comment la carte doit se comporter */
-    
+    /* flex-grow: 1, flex-shrink: 1, flex-basis: 320px */
+    flex: 1 1 320px;
     background-color: #ffffff;
-    border-radius: 15px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
-    overflow: hidden; 
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 /* Effet de survol sur la carte */
 .dourousi-cours-card:hover {
-    transform: translateY(-8px); /* Fait "monter" la carte */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 
-/* --- Image à la une (thumbnail) --- */
+/* Image à la une (thumbnail) */
 .dourousi-thumbnail {
     width: 100%;
-    height: 200px; /* Hauteur fixe pour l'image */
+    height: 200px;
     overflow: hidden;
 }
 
 .dourousi-thumbnail img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* L'image couvre la zone sans se déformer */
+    object-fit: cover;
     transition: transform 0.4s ease;
 }
 
 .dourousi-cours-card:hover .dourousi-thumbnail img {
-    transform: scale(1.05); /* Léger zoom sur l'image au survol de la carte */
+    transform: scale(1.05);
 }
 
 
-/* --- Titre du cours sur la carte --- */
+/* Titre du cours sur la carte */
 .dourousi-title {
     font-size: 1.25rem;
     line-height: 1.5rem;
@@ -87,7 +83,7 @@
 
 .dourousi-title a {
     text-decoration: none;
-    color: inherit; /* Hérite la couleur du h2 */
+    color: inherit;
 }
 
 .dourousi-title a:hover {
@@ -95,12 +91,12 @@
 }
 
 
-/* --- Métadonnées (Savant, Difficulté) --- */
+/* Métadonnées (Savant, Difficulté) */
 .dourousi-meta {
     padding: 0 1.5rem;
     color: #7f8c8d;
     font-size: 0.9rem;
-    flex-grow: 1; /* Pousse le bouton vers le bas */
+    flex-grow: 1; /* Assure que le bouton reste en bas de la carte */
 }
 
 .dourousi-meta p {
@@ -119,21 +115,19 @@
 }
 
 
-/* --- Bouton "Voir le cours" --- */
+/* Bouton "Voir le cours" */
 .dourousi-btn {
     display: block;
     background-color: var(--dourousi-color-main);
     color: var(--dourousi-color-text);
     text-align: center;
     padding: 0.8rem 1.5rem;
-    margin: 1.5rem; /* Marge autour du bouton */
+    margin: 1.5rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s ease;
 }
-
-
 
 /* --- Pagination --- */
 .dourousi-pagination {
@@ -165,13 +159,13 @@
     font-weight: 600;
 }
 
-/* --- Responsive pour les petits écrans --- */
+/* Responsive pour les petits écrans */
 @media (max-width: 768px) {
     .dourousi-archive-cours h1 {
         font-size: 2rem;
     }
 
-    .dourousi-cours-grid {
-        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    .dourousi-cours-card {
+        flex: 1 1 100%;
     }
 }

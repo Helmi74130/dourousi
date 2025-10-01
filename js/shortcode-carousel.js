@@ -1,12 +1,12 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
     $('.dourousi-courses-carousel').slick({
         infinite: true,
-        slidesToShow: 3, // Nombre de cartes affichées
-        slidesToScroll: 1, // Nombre de cartes à défiler
+        slidesToShow: 3,
+        slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        dots: true, // Affiche les points de navigation
-        arrows: true, // Affiche les flèches de navigation
+        dots: true,
+        arrows: true,
         responsive: [
             {
                 breakpoint: 1024,

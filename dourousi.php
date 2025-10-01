@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: Dourousi
  * Description: Permet de créer un CPT "cours" avec meta (auteur, nom du livre, PDF, image à la une, lien externe) et des chapitres audio répétables.
@@ -8,67 +7,95 @@
  * Text Domain: dourousi
  */
 
-if (! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
+// --- CONSTANTES ---
 define('DOUROUSI_VERSION', '0.1.0');
 define('DOUROUSI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DOUROUSI_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-require_once DOUROUSI_PLUGIN_DIR . 'includes/assets.php';
-require_once DOUROUSI_PLUGIN_DIR . 'includes/cpt.php';
-require_once DOUROUSI_PLUGIN_DIR . 'includes/meta-fields.php';
-require_once DOUROUSI_PLUGIN_DIR . 'includes/settings.php';
-require_once DOUROUSI_PLUGIN_DIR . 'includes/time-listen.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/templates-loader.php';
+// --- INCLUSIONS DES FICHIERS ---
+$includes = [
+    'assets.php',
+    'cpt.php',
+    'meta-fields.php',
+    'settings.php',
+    'time-listen.php',
+    'templates-loader.php', // Contient la logique single_template filtrée
+    'shortcodes.php',
+];
 
+foreach ($includes as $file) {
+    require_once DOUROUSI_PLUGIN_DIR . 'includes/' . $file;
+}
 
-add_filter('template_include', function ($template) {
-    if (is_singular('cours')) {
-        $plugin_template = DOUROUSI_PLUGIN_DIR . 'templates/single-cours.php';
-        if (file_exists($plugin_template)) return $plugin_template;
-    }
-    return $template;
-});
+// --- LOGIQUE DE TEMPLATING (Archive & Single de secours) ---
 
-
-// Inclure les shortcodes
-require_once plugin_dir_path(__FILE__) . 'includes/shortcodes.php';
-
-
-add_filter('template_include', 'dourousi_load_archive_template');
-
-function dourousi_load_archive_template($template)
-{
+/**
+ * Charge les templates d'archive et de single par défaut du plugin
+ * si le thème n'en fournit pas.
+ *
+ * NOTE: Le template 'single-cours' devrait idéalement être géré par includes/templates-loader.php
+ * qui a la logique pour charger les templates alternatifs. Ceci est un fallback.
+ *
+ * @param string $template Chemin du template actuel.
+ * @return string
+ */
+add_filter('template_include', 'dourousi_load_templates');
+function dourousi_load_templates(string $template): string {
+    // 1. Template d'archive 'cours'
     if (is_post_type_archive('cours')) {
-        $plugin_template = plugin_dir_path(__FILE__) . 'templates/archive-cours.php';
+        $plugin_template = DOUROUSI_PLUGIN_DIR . 'templates/archive-cours.php';
         if (file_exists($plugin_template)) {
             return $plugin_template;
         }
     }
+    
+    // 2. Template single 'cours' (Fallback)
+    if (is_singular('cours')) {
+        $plugin_template = DOUROUSI_PLUGIN_DIR . 'templates/single-cours.php';
+        if (file_exists($plugin_template)) {
+            return $plugin_template;
+        }
+    }
+    
     return $template;
 }
 
-function dourousi_enqueue_styles()
-{
+// --- ASSETS ET BLOCS ---
+
+/**
+ * Enqueue les styles spécifiques à l'archive du CPT 'cours'.
+ */
+function dourousi_enqueue_archive_styles(): void {
     if (is_post_type_archive('cours')) {
-        wp_enqueue_style('dourousi-archive', plugin_dir_url(__FILE__) . 'css/archive-cours.css');
+        wp_enqueue_style(
+            'dourousi-archive', 
+            DOUROUSI_PLUGIN_URL . 'css/archive-cours.css',
+            [],
+            DOUROUSI_VERSION // Utilisation de la constante de version
+        );
     }
 }
-add_action('wp_enqueue_scripts', 'dourousi_enqueue_styles');
+add_action('wp_enqueue_scripts', 'dourousi_enqueue_archive_styles');
 
-function dourousi_register_blocks()
-{
+/**
+ * Enregistre les blocs Gutenberg personnalisés.
+ */
+function dourousi_register_blocks(): void {
+    $block_script_path = 'blocks/dourousi-courses-block.js';
+    
     wp_register_script(
         'dourousi-courses-block',
-        plugin_dir_url(__FILE__) . 'blocks/dourousi-courses-block.js',
-        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
-        filemtime(plugin_dir_path(__FILE__) . 'blocks/dourousi-courses-block.js')
+        DOUROUSI_PLUGIN_URL . $block_script_path,
+        ['wp-blocks', 'wp-element', 'wp-editor', 'wp-components'],
+        filemtime(DOUROUSI_PLUGIN_DIR . $block_script_path) // Utilisation de filemtime pour la mise en cache
     );
 
-    register_block_type('dourousi/courses', array(
+    register_block_type('dourousi/courses', [
         'editor_script' => 'dourousi-courses-block',
-    ));
+    ]);
 }
 add_action('init', 'dourousi_register_blocks');

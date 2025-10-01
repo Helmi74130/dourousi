@@ -1,12 +1,7 @@
 /* Styles généraux du conteneur */
 .wrap {
-    /* Utilise l'espace de la page */
     max-width: 1200px; 
 }
-
-/* ------------------------------------- */
-/* 1. Section de personnalisation des couleurs */
-/* ------------------------------------- */
 
 /* Conteneur principal des réglages */
 .form-wrap-dourousi {
@@ -39,7 +34,7 @@
     padding: 20px 0;
     color: #555;
     vertical-align: top;
-    width: 30%; /* Assure un alignement propre */
+    width: 30%;
 }
 
 .form-table td {
@@ -128,7 +123,7 @@
     background-color: #efefef;
     border: 1px solid #ccc;
     border-radius: 4px;
-    resize: none; /* Empêche le redimensionnement */
+    resize: none; 
     min-height: 80px;
     color: #333;
     margin-top: 10px;

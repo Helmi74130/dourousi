@@ -1,32 +1,29 @@
-
-
-
 /* Styles pour la mise en page en grille */
 .dourousi-courses-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 25px; /* Espace entre les cartes */
+  gap: 25px;
   padding: 20px 0;
 }
 
 .dourousi-card-link {
   text-decoration: none;
   color: inherit;
-  flex: 1 1 300px; /* Les cartes peuvent grandir/rétrécir, mais ont une base de 300px */
+  flex: 1 1 300px; 
   max-width: 350px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dourousi-card-link:hover {
-  transform: translateY(-8px); /* Légère levée au survol */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+  transform: translateY(-8px); 
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
 }
 
 .dourousi-course-card {
   background-color: #ffffff;
   border-radius: 12px;
-  overflow: hidden; /* Pour que l'image ne dépasse pas les coins arrondis */
+  overflow: hidden; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   height: 100%;
   display: flex;
@@ -41,7 +38,7 @@
 
 .card-content {
   padding: 20px;
-  flex-grow: 1; /* Permet au contenu de remplir l'espace restant */
+  flex-grow: 1; 
 }
 
 .card-title {
@@ -73,7 +70,7 @@
   color: #495057;
 }
 
-/* Ajustements pour les écrans plus petits */
+/* Media Queries */
 @media (max-width: 600px) {
   .dourousi-courses-grid {
     flex-direction: column;

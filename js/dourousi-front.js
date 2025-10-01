@@ -1,128 +1,136 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const playerElement = document.getElementById('main-audio-player');
+    
+    // Quitte si l'élément ou l'ID du post est manquant
+    const postId = playerElement?.dataset.postId;
+    if (!playerElement || !postId) return;
+
     const checkboxes = document.querySelectorAll('.chapter-done');
     const progressFill = document.querySelector('.progress-fill');
     const progressText = document.querySelector('.progress-text');
+    const chapters = document.querySelectorAll('.dourousi-chapter');
+    const titleDisplay = document.getElementById('current-title-display');
 
-    const postId = playerElement.dataset.postId;
-    if (!postId) return;
+    let currentChapterId = null;
 
-    // Détermine si l'on est sur un grand écran
-    const isDesktopDevice = window.innerWidth > 768; 
+    // --- PLYR INITIALIZATION ---
 
-    // 1. Définir les contrôles de base (communs à tous les appareils)
+    const isDesktop = window.innerWidth > 768; 
     let controlsList = [
         'play', 
         'progress', 
         'current-time', 
         'duration',
         'download'
-        
     ];
-
-    // 2. Ajouter les contrôles de volume UNIQUEMENT si c'est un PC
-    if (isDesktopDevice) {
-        // Ajouter 'mute' et 'volume' à la liste des contrôles
-        controlsList.push('settings',  );
+    
+    // Ajoute les contrôles de paramètres et de volume uniquement sur les grands écrans
+    if (isDesktop) {
+        controlsList.push('settings', 'mute', 'volume');
     }
 
-    // 3. Initialiser Plyr avec la liste de contrôles dynamique
     const player = new Plyr(playerElement, {
-        controls: controlsList, // La liste ajustée
-        settings: ['speed'], // Options dans le menu des paramètres
+        controls: controlsList,
+        settings: ['speed'], 
         speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
-        
     });
+    
+    // --- PROGRESS & STORAGE HELPERS ---
 
-
-    let currentChapterId = null;
-
-    function updateProgress() {
+    /**
+     * Calcule et met à jour l'affichage de la barre de progression.
+     */
+    const updateProgress = () => {
         const total = checkboxes.length;
         let done = 0;
+        
         checkboxes.forEach(cb => {
             if (cb.checked) done++;
         });
-        const percent = total > 0 ? (done / total) * 100 : 0;
-        progressFill.style.width = percent + "%";
-        progressText.textContent = done + " / " + total + " cours terminés";
-    }
 
-    // --- Restaurer état des checkboxes ---
+        const percent = total > 0 ? (done / total) * 100 : 0;
+        progressFill.style.width = `${percent}%`;
+        progressText.textContent = `${done} / ${total} cours terminés`;
+    };
+
+    /**
+     * Persiste l'état de complétion dans localStorage.
+     * @param {HTMLElement} checkbox 
+     */
+    const handleChapterCompletion = (checkbox) => {
+        const chapId = checkbox.dataset.id;
+        const key = `chapter_done_${postId}_${chapId}`;
+        const listItem = checkbox.closest('li');
+        
+        localStorage.setItem(key, checkbox.checked);
+        listItem.classList.toggle('completed', checkbox.checked);
+        
+        updateProgress();
+    };
+
+    // --- CHECKBOX INITIALIZATION AND LISTENERS ---
+
     checkboxes.forEach(cb => {
         const chapId = cb.dataset.id;
-        const key = "chapter_done_" + postId + "_" + chapId;
+        const key = `chapter_done_${postId}_${chapId}`;
         const saved = localStorage.getItem(key);
-        if (saved === "true") {
+
+        // Restaure l'état
+        if (saved === 'true') {
             cb.checked = true;
-            cb.closest("li").classList.add("completed");
+            cb.closest('li').classList.add('completed');
         }
 
-        cb.addEventListener("change", function () {
-            localStorage.setItem(key, this.checked);
-            if (this.checked) {
-                cb.closest("li").classList.add("completed");
-            } else {
-                cb.closest("li").classList.remove("completed");
-            }
-            updateProgress();
-        });
+        // Ajoute l'écouteur de changement
+        cb.addEventListener('change', () => handleChapterCompletion(cb));
     });
 
-    // --- Gestion du clic sur toute la ligne du chapitre ---
-    const chapters = document.querySelectorAll(".dourousi-chapter");
-    const titleDisplay = document.getElementById('current-title-display');
+    // --- CHAPTER CLICK HANDLER ---
 
     chapters.forEach(chapter => {
-        chapter.addEventListener("click", function (e) {
-            // Si on clique sur la checkbox ou le label, ne pas lancer l'audio
+        chapter.addEventListener('click', (e) => {
+            // Empêche le lancement de l'audio si l'utilisateur clique sur la checkbox ou son label.
             if (e.target.closest('input') || e.target.closest('label')) return;
 
-            const audioUrl = this.dataset.audio;
-            const chapId = this.dataset.id;
-            const chapTitle = this.querySelector(".chapter-title").textContent.trim();
+            const audioUrl = chapter.dataset.audio;
+            const chapId = chapter.dataset.id;
+            const chapTitle = chapter.querySelector('.chapter-title').textContent.trim();
+            const currentTitleElement = chapter.querySelector('.chapter-title');
 
             currentChapterId = chapId;
 
-            // Lancer l'audio
+            // Charge et lance l'audio
             player.source = {
                 type: 'audio',
                 sources: [{ src: audioUrl, type: 'audio/mp3' }]
             };
             player.play();
 
-            // Mettre à jour le titre affiché
-            if (titleDisplay) titleDisplay.textContent = chapTitle;
+            // Met à jour le titre affiché
+            if (titleDisplay) {
+                titleDisplay.textContent = chapTitle;
+            }
 
-            // Gérer la classe active
-            // Retire la classe active de tous les titres
-            document.querySelectorAll(".chapter-title").forEach(t => t.classList.remove("active"));
-
-            // Ajoute active au titre du chapitre cliqué
-            const title = this.querySelector(".chapter-title");
-            if (title) title.classList.add("active");
+            // Gère la classe active
+            document.querySelectorAll('.chapter-title').forEach(t => t.classList.remove('active'));
+            currentTitleElement?.classList.add('active');
         });
     });
 
-    // --- Quand un audio se termine ---
-    player.on('ended', function () {
-        if (currentChapterId !== null) {
-            const cb = document.querySelector('.chapter-done[data-id="' + currentChapterId + '"]');
+    // --- AUDIO ENDED EVENT ---
+    
+    player.on('ended', () => {
+        if (currentChapterId) {
+            const cb = document.querySelector(`.chapter-done[data-id="${currentChapterId}"]`);
+            
             if (cb && !cb.checked) {
-                const key = "chapter_done_" + postId + "_" + currentChapterId;
+                // Marque le chapitre comme terminé et met à jour le stockage
                 cb.checked = true;
-                localStorage.setItem(key, true);
-                cb.closest("li").classList.add("completed");
-                updateProgress();
+                handleChapterCompletion(cb);
             }
         }
     });
 
+    // Initialisation
     updateProgress();
 });
-
-
-
-
-
-
